@@ -1,0 +1,656 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;800&display=swap');
+
+:root {
+    --bg-color: #f8f9fa; /* Light background */
+    --text-color: #212529; /* Dark text */
+    --nav-bg: #181818; /* Dark navbar background */
+    --primary-color: #8A2BE2; /* Vibrant Purple */
+    --green-accent: #d4edda;
+    --green-dot: #28a745;
+}
+
+body {
+    font-family: 'Poppins', sans-serif; /* Use the new font */
+    margin: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Hero Header */
+
+
+/* Sections */
+section {
+    padding: 40px 0;
+}
+
+.hero-contact {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between icons */
+    margin-top: 15px;
+}
+
+.hero-contact a {
+    color: var(--text-color); /* Use the default text color */
+    font-size: 2rem; /* Make icons larger */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.hero-contact a:hover {
+    color: var(--primary-color); /* Highlight with teal on hover */
+    transform: scale(1.2); /* Enlarge on hover */
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--primary-color);
+    font-weight: 400;
+    font-size: 2rem;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: var(--border-color);
+    margin: 20px 0;
+}
+
+/* In static/css/style.css */
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+    color: #111; /* Darkest text for main titles */
+    font-weight: 700;
+}
+
+p {
+    color: #555; /* Slightly lighter gray for body text */
+}
+
+/* In static/css/style.css */
+
+.card h3 {
+    color: var(--primary-color);
+}
+
+.skills-grid span {
+    background: transparent;
+    color: var(--primary-color);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    border: 1px solid var(--primary-color); /* Clean border */
+    box-shadow: none; /* Remove previous glow */
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.skills-grid span:hover {
+    background-color: var(--primary-color);
+    color: white; /* Invert colors on hover */
+    box-shadow: 0 0 8px var(--primary-color), 
+                0 0 16px var(--primary-color); /* Add glow on hover */
+}
+
+/* Cards for Projects & Blog */
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+
+.card {
+    background: var(--card-bg);
+    border-radius: 12px; /* Softer corners */
+    padding: 25px;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #ced4da; 
+    /* This creates the "frosted glass" effect */
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+}
+
+
+
+.card h3 {
+    color: #111;
+    font-weight: 700;
+}
+
+.card p {
+    color: #555;
+    font-size: 0.95rem;
+}
+
+.card-date {
+    color: #888;
+    font-size: 0.85rem;
+}
+
+.card .btn {
+    background: #111;
+    color: white;
+}
+.card .btn:hover {
+    background: #333; /* A slightly lighter black on hover */
+}
+
+/* In static/css/style.css, add this with the other card styles */
+.card-img {
+    width: 100%;
+    border-radius: 8px 8px 0 0; /* Match card corners */
+    margin: -25px -25px 20px -25px; /* Make it flush with the card edges */
+    max-height: 200px;
+    object-fit: cover;
+}
+
+/* Button */
+/* In static/css/style.css */
+
+.btn {
+    display: inline-block;
+    color: white;
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 700;
+    border: none;
+    /* The muted bluish rainbow gradient */
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
+    transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+    filter: brightness(0.9); /* Mute the gradient slightly */
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    /* The "Highlight" effect */
+    filter: brightness(1.2); 
+    box-shadow: 0 0 8px var(--gradient-mid), 
+                0 0 16px var(--gradient-start);
+}
+/* Contact Form */
+#contact {
+    text-align: center;
+}
+
+.contact-form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+}
+
+.contact-form button {
+    border: none;
+    cursor: pointer;
+}
+
+/* Blog Post Page Specific Styles */
+.post-header {
+    text-align: center;
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.post-header h1 {
+    font-size: 2.5rem;
+}
+.post-meta {
+    color: #777;
+    font-style: italic;
+}
+.post-content {
+    padding: 30px 0;
+}
+.post-content h2, .post-content h3 {
+    color: var(--primary-color);
+}
+.post-content pre {
+    background-color: #2d2d2d;
+    color: #f4f4f9;
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+}
+.post-content code {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* In static/css/style.css, at the bottom */
+
+/* Animation on Scroll */
+.hidden {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Navbar */
+/* --- Final Navbar Styles --- */
+
+.navbar-container {
+    padding: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    background: var(--nav-bg);
+    color: white;
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.nav-logo img {
+    height: 30px;
+    vertical-align: middle;
+}
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    /* This pushes the social icons to the right */
+    margin-left: auto; 
+    padding-right: 30px;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #a0a0a0;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.nav-menu a:hover {
+    color: white;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-icon {
+    color: #a0a0a0;
+    font-size: 1.5rem;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-icon:hover {
+    color: white;
+    transform: scale(1.1);
+}
+
+.btn.btn-contact {
+    background: white;
+    color: black;
+    font-weight: 700;
+    padding: 8px 20px;
+}
+
+.btn.btn-contact {
+    background: white;
+    color: black;
+    font-weight: 700;
+    padding: 8px 20px;
+}
+
+/* Footer */
+/* In static/css/style.css */
+
+.footer-divider {
+    border: 0;
+    height: 1px;
+    background-color: #e0e0e0; /* A light, subtle line */
+    margin-top: 60px;
+}
+
+.site-footer {
+    background: transparent; /* Makes it blend with the page */
+    color: #555; /* Soft dark gray for text */
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.site-footer p {
+    margin: 0 0 10px;
+    font-size: 0.9rem;
+}
+
+.footer-links a {
+    color: #212529; /* Darker color for links */
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: var(--primary-color); /* Uses the vibrant purple on hover */
+}
+
+/* View More Button */
+.view-more-container {
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* Page Layout for Blog/Projects */
+.page-layout {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+.page-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+/* In static/css/style.css */
+
+.page-header h1 {
+    font-size: 3rem;
+    font-weight: 800;
+}
+
+.page-header p {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.hero {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.profile-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 6px solid #111;
+    box-shadow: 0 0 20px #111;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 30px 0 15px;
+    color: #111;
+}
+
+.hero .subtitle {
+    max-width: 600px;
+    margin: 0 auto 30px;
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.btn.btn-dark {
+    background: #111;
+    color: white;
+}
+
+.availability-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--green-accent);
+    color: var(--green-dot);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 700;
+    text-decoration: none;
+    /* --- ADD THIS LINE --- */
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.availability-pill:hover {
+    transform: translateY(-2px); /* Lifts the button up */
+    background-color: #c3e6cb; /* A slightly more saturated green */
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3); /* Adds a green glow */
+}
+
+.tech-stack {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    align-items: center;
+}
+
+.tech-stack img {
+    height: 40px;
+    transition: transform 0.2s ease;
+}
+
+.tech-stack img:hover {
+    transform: scale(1.2);
+}
+
+/* In static/css/style.css */
+
+.btn-glass {
+    /* --- The Glass Effect --- */
+    background: rgba(255, 255, 255, 0.2); /* Semi-transparent white background */
+    -webkit-backdrop-filter: blur(10px); /* Frosted glass blur for Safari */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Faint white border */
+    
+    /* --- Font & Styling --- */
+    color: #111; /* Dark font color */
+    font-weight: 600;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-glass:hover {
+    background: rgba(255, 255, 255, 0.4); /* Brighter background on hover */
+    transform: translateY(-2px);
+}
+
+/* --- Option 2: Accent Underline for Headings --- */
+section h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    position: relative; /* Needed for the pseudo-element */
+    padding-bottom: 15px; /* Space for the line */
+}
+
+section h2::after {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 60px; /* Width of the line */
+    height: 4px; /* Thickness of the line */
+    background: #111; /* Changed to match your heading text color */
+    bottom: 0;
+    left: 50%; /* Center the line */
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+/* --- About Me Section --- */
+
+.about-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.about-column h3 {
+    font-size: 1.5rem;
+    color: #333;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 30px;
+    border-left: 2px solid #e0e0e0;
+    margin-bottom: 30px;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -9px; /* Position the dot on the line */
+    top: 5px;
+    width: 16px;
+    height: 16px;
+    background-color: white;
+    border: 3px solid var(--primary-color); /* Purple dot */
+    border-radius: 50%;
+}
+
+.timeline-item h4 {
+    margin: 0 0 5px;
+    font-size: 1.1rem;
+    color: #111;
+}
+
+.timeline-date {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.timeline-item p {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 768px) {
+    .about-container {
+        grid-template-columns: 1fr; /* Stack columns on mobile */
+    }
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* --- Responsive Design --- */
+
+/* For Tablets and Smaller Desktops (less than 992px) */
+@media (max-width: 992px) {
+    .navbar {
+        max-width: 95%;
+    }
+}
+
+/* For Mobile Devices (less than 768px) */
+@media (max-width: 768px) {
+    /* --- Navbar Adjustments --- */
+    .nav-menu {
+        display: none; /* Hide the main links on mobile */
+    }
+    
+    .navbar {
+        padding: 10px 15px;
+    }
+
+    .nav-right {
+        gap: 15px;
+    }
+    
+    /* --- Hero Section Adjustments --- */
+    .hero h1 {
+        font-size: 2.5rem; /* Smaller main title */
+    }
+
+    .hero .subtitle {
+        font-size: 1rem;
+    }
+
+    .profile-img {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .action-buttons {
+        flex-direction: column; /* Stack buttons vertically */
+    }
+
+    /* --- General Content Adjustments --- */
+    .container {
+        padding: 15px;
+    }
+
+    section h2 {
+        font-size: 2rem;
+    }
+
+    /* --- Card Layout --- */
+    .card-container {
+        grid-template-columns: 1fr; /* Stack cards in a single column */
+    }
+
+    /* --- About Me Section --- */
+    .about-container {
+        grid-template-columns: 1fr; /* Stack columns */
+    }
+}
