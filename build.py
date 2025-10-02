@@ -2,6 +2,7 @@ import os
 import markdown
 from jinja2 import Environment, FileSystemLoader
 import yaml
+from datetime import datetime
 
 # --- Setup ---
 output_dir = "blog"
@@ -55,12 +56,16 @@ for filename in os.listdir(posts_dir):
             
             posts.append({
                 'title': frontmatter.get('title', 'Untitled Post'),
+                'author': frontmatter.get('author', '[Your Name]'),
                 'date': frontmatter.get('date', ''),
                 'summary': frontmatter.get('summary', ''),
                 'content': html_content,
                 'slug': os.path.splitext(filename)[0]
             })
 
+for post in posts:
+    post['date_obj'] = datetime.strptime(post['date'], '%B %d, %Y')
+posts.sort(key=lambda x: x['date_obj'], reverse=True)
 # --- (The rest of the script remains the same) ---
 
 # --- Generate Individual Blog Pages ---
@@ -68,7 +73,7 @@ post_template = env.get_template("post.html")
 for post in posts:
     output_path = os.path.join(output_dir, f"{post['slug']}.html")
     with open(output_path, 'w', encoding='utf-8') as f:
-        f.write(post_template.render(post=post, title=post['title'], date=post['date'], content=post['content']))
+        f.write(post_template.render(post=post)) 
     print(f"Generated post: {output_path}")
 
 # --- Generate Main Pages ---

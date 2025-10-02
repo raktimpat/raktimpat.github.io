@@ -143,6 +143,13 @@ p {
     font-size: 0.85rem;
 }
 
+.card-author {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #555;
+    margin: -10px 0 10px; /* Adjust spacing */
+}
+
 .card .btn {
     background: #111;
     color: white;
@@ -223,8 +230,9 @@ p {
     font-size: 2.5rem;
 }
 .post-meta {
-    color: #777;
+    color: #555;
     font-style: italic;
+    font-size: 1rem;
 }
 /* Heading Colors in Blog Posts */
 .post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6 {
@@ -730,5 +738,52 @@ html {
 /* Style for the checkmark icon */
 .copy-btn .fas.fa-check {
     color: #28a745; /* Green checkmark */
+}
+
+/* --- Scrolling Tech Stack Logos --- */
+
+/* The container that creates the scrolling window */
+.tech-stack-container {
+    width: 70%;
+    margin: 0 auto;
+    overflow: hidden; /* Hides the logos outside the container */
+    padding: 20px 0;
+    position: relative;
+}
+
+/* The element that holds and moves the logos */
+/* The element that holds and moves the logos */
+.tech-stack {
+    display: flex;
+    /* Update calculation with new, tighter width */
+    width: calc(6 * 100px * 2); 
+    gap: 0;
+    justify-content: flex-start;
+    align-items: center;
+    animation: scroll 40s linear infinite;
+}
+
+.tech-stack img {
+    height: 40px;
+    width: 120px; /* Reduced from 150px to tighten the space */
+    padding: 0 10px;
+    object-fit: contain;
+}
+
+
+/* Pause animation on hover */
+.tech-stack-container:hover .tech-stack {
+    animation-play-state: paused;
+}
+
+/* The keyframes that define the movement */
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        /* Update calculation to match the new width */
+        transform: translateX(calc(-6 * 120px)); 
+    }
 }
 

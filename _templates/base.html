@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[Your Name] - AI Engineer</title>
+    <title>Raktim Patar</title>
     <link rel="stylesheet" href="static/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -32,13 +32,22 @@
                 </a>
             </div>
 
-            <div class="tech-stack">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg" alt="GCP">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow">
+            <div class="tech-stack-container">
+                <div class="tech-stack">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg" alt="GCP">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow">
+
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg" alt="GCP">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow">
+                </div>
             </div>
         </main>
         <hr>
@@ -74,36 +83,36 @@
                     </div>
                 </div>
             </section>
-            <section id="projects" class="hidden">
+            <section id="projects">
                 <h2>Projects</h2>
                 <div class="card-container">
                     <div class="card">
-                        <img src="static/images/project1-thumbnail.png" alt="Project 1 Thumbnail" class="card-img">
-                        <h3>Project Title 1</h3>
-                        <p>A brief, compelling description of this amazing project. What problem did it solve? What tech was used?</p>
+                        <img src="/static/images/project1-thumbnail.png" alt="Project 1" class="card-img">
+                        <h3>Project Title One</h3>
+                        <p>A brief, compelling description of this project, highlighting the tech used and the problem solved.</p>
                         <a href="#" class="btn">View on GitHub</a>
                     </div>
                     <div class="card">
-                        <img src="static/images/project2-thumbnail.png" alt="Project 1 Thumbnail" class="card-img">
-                        <h3>Project Title 2</h3>
+                        <img src="/static/images/project2-thumbnail.png" alt="Project 2" class="card-img">
+                        <h3>Project Title Two</h3>
                         <p>Another description for a different project, showcasing your diverse skill set in AI and machine learning.</p>
-                        <a href="#" class="btn">Live Demo</a>
+                        <a href="#" class="btn">View on GitHub</a>
                     </div>
                 </div>
-                    <div class="view-more-container">
-                    <a href="/projects.html"class="btn btn-glass">View All Projects &rarr;</a>
-                    </div>
-                 </section>
+                <div class="view-more-container">
+                    <a href="/projects.html" class="btn btn-glass">View All Projects &rarr;</a>
+                </div>
+            </section>
 
             <hr>
 
             <section id="blog">
                 <h2>Writings & Thoughts</h2>
                 <div class="card-container">
-                    {% for post in posts %}
+                    {% for post in posts[:2] %}
                     <div class="card">
                         <h3>{{ post.title }}</h3>
-                        <p>{{ post.summary }}</p>
+                        <p class="card-author">By {{ post.author }}</p> <p>{{ post.summary }}</p>
                         <span class="card-date">{{ post.date }}</span>
                         <a href="/blog/{{ post.slug }}.html" class="btn">Read More</a>
                     </div>

@@ -3,7 +3,7 @@
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects - [Your Name]</title>
+    <title>Blog</title>
     <link rel="stylesheet" href="static/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -22,7 +22,7 @@
             {% for post in posts %}
             <div class="card">
                 <h3>{{ post.title }}</h3>
-                <p>{{ post.summary }}</p>
+                <p class="card-author">By {{ post.author }}</p> <p>{{ post.summary }}</p>
                 <span class="card-date">{{ post.date }}</span>
                 <a href="/blog/{{ post.slug }}.html" class="btn">Read More</a>
             </div>

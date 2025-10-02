@@ -26,12 +26,12 @@
         <a href="/" class="back-link">&larr; Back to Home</a>
         <article>
             <header class="post-header">
-                <h1>{{ title }}</h1>
-                <p class="post-meta">{{ date }}</p>
-            </header>
-            <div class="post-content">
-                {{ post.content | safe }}
-            </div>
+            <h1>{{ post.title }}</h1>
+            <p class="post-meta">By {{ post.author }} on {{ post.date }}</p>
+        </header>
+        <section class="post-content">
+            {{ post.content | safe }}
+        </section>
         </article>
     </div>
     {% include 'footer.html' %}

@@ -2,9 +2,8 @@
 title: "How to Build a Linear Regression Model from Scratch in Python"
 date: June 10, 2025
 summary: "We'll go beyond the libraries and build a fully functional linear regression model from the ground up, using only Python and NumPy. This tutorial covers the math, the code, and the intuition behind gradient descent."
+author: "Raktim Patar"
 ---
-
-# How to Build a Linear Regression Model from Scratch in Python
 
 Ever wondered what's really going on inside a machine learning model? This post is for you! 🧐 It’s time to ditch the fancy libraries like Scikit-learn and build a simple linear regression model completely from scratch. This guide gets us to roll up our sleeves and dive into the core concepts—like the cost function and the awesome Gradient Descent algorithm—to see how a model *actually* learns from data. By the end, you'll have a much deeper understanding of the magic behind the curtain and will have coded your very own predictive model. 🚀
 

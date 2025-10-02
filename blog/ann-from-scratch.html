@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header class="navbar-container">
+    <nav class="navbar">
+        <a href="/" class="nav-logo">
+            <img src="/static/images/rp_logo.png" alt="RP Logo">
+        </a>
+        <ul class="nav-menu">
+            <li><a href="/#about">About Me</a></li>
+            <li><a href="/projects.html">Projects</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+        </ul>
+
+        <div class="nav-right">
+            <a href="https://github.com/raktimpat" target="_blank" class="nav-icon" aria-label="GitHub Profile">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/raktim-patar73/" target="_blank" class="nav-icon" aria-label="LinkedIn Profile">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="/#contact" class="btn btn-contact">Contact</a>
+        </div>
+    </nav>
+</header>
+    <div class="container">
+        <a href="/" class="back-link">&larr; Back to Home</a>
+        <article>
+            <header class="post-header">
+            <h1>🧠 Decoding the Deep Learning Black Box: Building a Neural Net with NumPy</h1>
+            <p class="post-meta">By Raktim Patar on August 15, 2025</p>
+        </header>
+        <section class="post-content">
+            <figure style="margin: auto; text-align: center;">
+  <img src="../static/images/blog/ann_model_from_scratch/nn.png" alt="dataframe preview">
+  <figcaption>Fig. 1: Comparison between a human neuron and a artificial neuron</figcaption>
+</figure>
+
+<p>Ever felt a little mystified by what's truly churning inside your machine learning model? You call model.fit(), and voilà, it learns! But what's the actual mechanism of "learning"?</p>
+<p>Let's strip away the convenience of TensorFlow and PyTorch and build a complete multi-class classifier using only Python and NumPy. This isn't about replacing the big guns; it's about gaining fundamental, rock-solid intuition that will make you a much better deep learning practitioner.</p>
+<p>By the end, you'll have a working neural network and, more importantly, the deepest understanding of these four pillars:</p>
+<ul>
+<li><strong>Forward Propagation</strong>: The prediction path.</li>
+<li><strong>Loss Calculation</strong>: Measuring the mistake.</li>
+<li><strong>Backpropagation</strong>: The secret to finding blame.</li>
+<li><strong>Gradient Descent</strong>: The mechanism of learning.</li>
+</ul>
+<p>Let's get started on this adventure!</p>
+<h2>💫 The Spiral Dataset: A Non-Linear Challenge!</h2>
+<p>To truly see a neural network shine, we need a problem that can't be solved with a simple straight line. Enter the <strong>spiral dataset</strong>.
+This dataset consists of three classes of data points arranged in interlocking spirals.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Download the spiral dataset</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+
+<span class="err">!</span><span class="n">gdown</span> <span class="mi">1</span><span class="n">dLOPwh01o3k8p_hK633ixhD1ehz6nNWk</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;spiral.csv&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div>
+
+<figure style="width: 80%; max-width: 500px; margin: auto; text-align: center;">
+  <img src="../static/images/blog/ann_model_from_scratch/dataframe_head.png" alt="preview dataframe">
+  <figcaption>Fig. 2: Dataframe preview</figcaption>
+</figure>
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># Visualize the spiral data</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;x1&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;x2&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;bright&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<figure style="width: 80%; max-width: 500px; margin: auto; text-align: center;">
+  <img src="../static/images/blog/ann_model_from_scratch/spiral.png" alt="scatter plot spiral">
+  <figcaption>Fig. 3: Spiral</figcaption>
+</figure>
+
+<h2>Why this dataset?</h2>
+<ol>
+<li><strong>Non-Linearity:</strong> It's impossible to draw straight lines to separate the three colored classes. This immediately rules out simple linear models and forces our network to learn complex, curved decision boundaries.</li>
+<li><strong>Multi-Class:</strong> Unlike a simple yes/no problem, this is a multi-class classification task (class 0, 1, or 2). This allows us to implement a more general-purpose output layer using the Softmax activation function.</li>
+<li><strong>Simplicity:</strong> It's a 2D dataset, making it easy to visualize and understand what our model is learning at each step.</li>
+</ol>
+<p>Our data consists of <code>X</code>, a matrix where each row is a point with two features (its x and y coordinates), and <code>y</code>, a vector containing the corresponding class label for each point.</p>
+<h2>2. Why a Neural Network? The Limits of Simpler Models</h2>
+<p>A common starting point for classification is <strong>Logistic Regression</strong>. However, for our spiral problem, it would fail spectacularly.</p>
+<ul>
+<li><strong>Linear Boundaries:</strong> Logistic Regression is a linear classifier. It tries to find the best straight line (or hyperplane in higher dimensions) to separate the data. For our spiral, this is a hopeless task.</li>
+<li><strong>One-vs-Rest (OvR) for Multi-Class:</strong> To handle three classes, you would need to train <em>three separate</em> logistic regression models in a "One-vs-Rest" scheme (Class 0 vs. {1,2}, Class 1 vs. {0,2}, etc.). This is cumbersome.</li>
+</ul>
+<p>This is where a Neural Network offers two massive advantages:</p>
+<ol>
+<li>
+<p><strong>A Single, Unified Model:</strong> A single neural network can handle multi-class classification natively. We simply design an output layer with three neurons—one for each class—and it learns to distinguish between all classes simultaneously.</p>
+</li>
+<li>
+<p><strong>Automatic Feature Creation (Non-linearity):</strong> The true magic lies in the hidden layers. By passing data through layers of neurons with <strong>non-linear activation functions</strong> (like ReLU), the network learns to transform the original feature space. It can bend, stretch, and warp the data until the classes become easily separable. In essence, it automatically learns the complex features needed to solve the problem, a task that would require painstaking manual "feature engineering" with simpler models.</p>
+</li>
+</ol>
+<h2>3. The Underlying Mathematics of a Neural Network</h2>
+<p>A neural network is, at its heart, a series of nested mathematical functions. Let's break down the process of making a prediction and learning from it.</p>
+<h3>Forward Propagation: From Input to Output</h3>
+<p>This is the process of passing data through the network to get a prediction. For a simple network with one hidden layer:</p>
+<ol>
+<li>
+<p><strong>Input to Hidden Layer:</strong> We perform a linear transformation of the input data <code>X</code> using the first set of weights (<span class="arithmatex">\(W_1\)</span>) and biases (<span class="arithmatex">\(b_1\)</span>).</p>
+<div class="arithmatex">\[Z^{[1]} = X \cdot W_1 + b_1\]</div>
+</li>
+<li>
+<p><strong>Activation:</strong> We apply a non-linear activation function, like ReLU (Rectified Linear Unit), to introduce non-linearity.</p>
+<div class="arithmatex">\[A^{[1]} = \text{ReLU}(Z^{[1]})\]</div>
+</li>
+<li>
+<p><strong>Hidden to Output Layer:</strong> We perform a second linear transformation using the second set of weights (<span class="arithmatex">\(W_2\)</span>) and biases (<span class="arithmatex">\(b_2\)</span>).</p>
+<div class="arithmatex">\[Z^{[2]} = A^{[1]} \cdot W_2 + b_2\]</div>
+</li>
+<li>
+<p><strong>Softmax Activation:</strong> To get probabilities for our three classes, we apply the Softmax function to the final scores (<span class="arithmatex">\(Z^{[2]}\)</span>). Softmax turns a vector of scores into a probability distribution, where all outputs are between 0 and 1 and sum to 1.</p>
+<div class="arithmatex">\[\hat{y} = \text{Softmax}(Z^{[2]}) = \frac{e^{Z^{[2]}}}{\sum e^{Z^{[2]}}}\]</div>
+</li>
+</ol>
+<p>The result, <span class="arithmatex">\(\hat{y}\)</span>, is our model's prediction.</p>
+<h3>The Loss Function: Measuring Error</h3>
+<p>Now that we have a prediction, we need to measure how wrong it is. For multi-class classification, we use the <strong>Categorical Cross-Entropy Loss</strong>.</p>
+<p>The formula looks intimidating, but the concept is simple: it heavily penalizes the model when it predicts the wrong class with high confidence.</p>
+<div class="arithmatex">\[L = -\frac{1}{m} \sum_{i=1}^{m} \sum_{k=1}^{K} y_{ik} \log(\hat{y}_{ik})\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(m\)</span> is the number of training examples.</li>
+<li><span class="arithmatex">\(K\)</span> is the number of classes (3 in our case).</li>
+<li><span class="arithmatex">\(y_{ik}\)</span> is 1 if example <span class="arithmatex">\(i\)</span> belongs to class <span class="arithmatex">\(k\)</span>, and 0 otherwise.</li>
+<li><span class="arithmatex">\(\hat{y}_{ik}\)</span> is the model's predicted probability that example <span class="arithmatex">\(i\)</span> belongs to class <span class="arithmatex">\(k\)</span>.</li>
+</ul>
+<p>Our goal is to adjust the weights and biases to make this loss value as small as possible.</p>
+<h3>Backpropagation and Gradient Descent: Learning from Error</h3>
+<p>This is the core of the learning process.</p>
+<ol>
+<li>
+<p><strong>Backpropagation:</strong> This is an algorithm that calculates the "gradient" of the loss function with respect to every single weight and bias in the network. A gradient is simply a derivative that tells us two things: the <em>direction</em> of steepest ascent of the loss and the <em>magnitude</em> of that slope. In short, it tells us how to change each weight/bias to most effectively decrease the loss. It does this by applying the chain rule of calculus, starting from the loss and working its way backward through the network layers.</p>
+</li>
+<li>
+<p><strong>Gradient Descent:</strong> Once we have the gradients, we can update our parameters. We take a small step in the <em>opposite</em> direction of the gradient, because we want to <em>decrease</em> the loss. This update rule is applied to every weight and bias:</p>
+<div class="arithmatex">\[\theta_{\text{new}} = \theta_{\text{old}} - \alpha \frac{\partial L}{\partial \theta}\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(\theta\)</span> is any parameter (a weight or a bias).</li>
+<li><span class="arithmatex">\(\alpha\)</span> is the <strong>learning rate</strong>, a small hyperparameter that controls the size of our update step.</li>
+<li><span class="arithmatex">\(\frac{\partial L}{\partial \theta}\)</span> is the gradient calculated during backpropagation.</li>
+</ul>
+</li>
+</ol>
+<p>We repeat this cycle of <strong>forward propagation -&gt; calculate loss -&gt; backpropagation -&gt; update parameters</strong> for many iterations (epochs), and with each cycle, our model gets slightly better at classifying the data.</p>
+<h2>4. Code Implementation</h2>
+<p>Here is where we will translate all the above theory into NumPy code. 
+Let's break down what each part of the <code>NeuralNet</code> class does.</p>
+<hr />
+<h3>Initializing our Network</h3>
+<p>This is where we set up the skeleton of our network.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">NeuralNet</span><span class="p">:</span>
+
+  <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_featues</span><span class="p">,</span> <span class="n">num_hidden_neurons</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="n">num_features</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">h</span> <span class="o">=</span> <span class="n">num_hidden_neurons</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">num_classes</span>
+    <span class="c1"># Initialize weight and bias vectors for layer 1</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">W1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.01</span> 
+    <span class="bp">self</span><span class="o">.</span><span class="n">b1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="c1"># Initialize weight and bias vectors for layer 2</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">W2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.01</span> 
+    <span class="bp">self</span><span class="o">.</span><span class="n">b2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</code></pre></div>
+
+<ul>
+<li>It takes the number of input <strong>features</strong>, <strong>hidden neurons</strong>, and output <strong>classes</strong> as arguments.</li>
+<li>It initializes the <strong>weights (<code>W1</code>, <code>W2</code>)</strong> with small random numbers. This is crucial to break symmetry and ensure different neurons learn different things.</li>
+<li>It initializes the <strong>biases (<code>b1</code>, <code>b2</code>)</strong> to zero.</li>
+<li><code>cce_losses</code> is a list we'll use to track our model's performance over time.</li>
+</ul>
+<hr />
+<h3>Making a Prediction</h3>
+<p>This method implements <strong>Forward Propagation</strong>. It takes the input data <code>X</code> and passes it through the network to get a prediction.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">forward_pass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+    <span class="n">Z1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">W1</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b1</span>
+
+    <span class="c1"># ReLU activation</span>
+    <span class="n">A1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Z1</span><span class="p">)</span>
+    <span class="n">Z2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">W2</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b2</span>
+
+    <span class="c1"># Softmax activation</span>
+    <span class="n">exp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">Z2</span><span class="p">)</span>
+    <span class="n">A2</span> <span class="o">=</span> <span class="n">exp</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">exp</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">A1</span><span class="p">,</span> <span class="n">A2</span>
+</code></pre></div>
+
+<ol>
+<li><code>Z1 = np.dot(X, self.W1) + self.b1</code>: Calculates the weighted sum for the hidden layer.</li>
+<li><code>A1 = np.maximum(0, Z1)</code>: Applies the <strong>ReLU activation</strong> function. Any negative values in <code>Z1</code> are clipped to zero.</li>
+<li><code>Z2 = np.dot(A1, self.W2) + self.b2</code>: Calculates the weighted sum for the output layer using the activated outputs from the hidden layer (<code>A1</code>).</li>
+<li><code>A2 = ...</code>: Applies the <strong>Softmax activation</strong> to the output scores (<code>Z2</code>), turning them into class probabilities that sum to 1.</li>
+<li>It returns <code>A1</code> and <code>A2</code>, as we'll need them for the backward pass.</li>
+</ol>
+<hr />
+<h3>Measuring the Error</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">cce_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A2</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">log_likelihood</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">A2</span><span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">),</span><span class="n">y</span><span class="p">])</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">log_likelihood</span><span class="p">)</span><span class="o">/</span><span class="n">m</span>
+    <span class="k">return</span> <span class="n">loss</span>
+</code></pre></div>
+
+<p>This function calculates the <strong>Categorical Cross-Entropy loss</strong>.
+-   <code>m</code> is the number of training examples.
+-   <code>log_likelihood = -np.log(A2[range(m),y])</code>: This is a clever NumPy trick. For each example, it finds the predicted probability of the <strong>correct</strong> class (<code>y</code>) and calculates its negative logarithm. If the model is confident and correct (probability is close to 1), the loss is low. If it's confident but wrong (probability is close to 0), the loss is very high.
+-   <code>loss = np.sum(log_likelihood)/m</code>: It averages the loss across all training examples.</p>
+<hr />
+<h3>The Learning Step</h3>
+<p>This is the most critical part: <strong>Backpropagation</strong>. Here, we calculate the gradients—the direction and magnitude of change needed for our weights and biases to reduce the loss. We use the chain rule of calculus to work backward from the loss.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">backward_pass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">A1</span><span class="p">,</span> <span class="n">A2</span><span class="p">):</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1">#back prop into W2 and b2</span>
+    <span class="n">dZ2</span> <span class="o">=</span> <span class="n">A2</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">dZ2</span><span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">),</span><span class="n">y</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="n">dZ2</span> <span class="o">/=</span> <span class="n">m</span>
+    <span class="n">dW2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A1</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">dZ2</span><span class="p">)</span>
+    <span class="n">db2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dZ2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># back prop into hidden layer</span>
+    <span class="n">dA1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">dZ2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">W2</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">dZ1</span> <span class="o">=</span> <span class="n">dA1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">dZ1</span><span class="p">[</span><span class="n">A1</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">dW1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">dZ1</span><span class="p">)</span>
+    <span class="n">db1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dZ1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">dW1</span><span class="p">,</span> <span class="n">dW2</span><span class="p">,</span> <span class="n">db1</span><span class="p">,</span> <span class="n">db2</span>
+</code></pre></div>
+
+<p><strong>1. Gradient for the Output Layer (<code>dZ2</code>)</strong></p>
+<p>The gradient of the CCE loss with respect to the pre-activation output <code>Z2</code> has a beautiful simplification: it's just the predicted probabilities minus the true labels (in one-hot format).</p>
+<ul>
+<li><code>dZ2 = A2.copy()</code>: Start with the predicted probabilities.</li>
+<li><code>dZ2[range(m),y] -= 1</code>: For each example, subtract 1 from the column corresponding to the correct class. This efficiently computes <code>(Predicted - True)</code> without creating a full one-hot matrix.</li>
+<li><code>dZ2 /= m</code>: We average the gradient across the batch.</li>
+<li><strong>Math:</strong> <span class="arithmatex">\(\frac{\partial L}{\partial Z_2} = A_2 - Y_{\text{one-hot}}\)</span></li>
+</ul>
+<p><strong>2. Gradients for <code>W2</code> and <code>b2</code></strong></p>
+<p>Now we use <code>dZ2</code> to find the gradients for the second layer's weights and bias.</p>
+<ul>
+<li><code>dW2 = np.dot(A1.T, dZ2)</code>: This calculates the gradient for <code>W2</code>. The error contribution of <code>W2</code> depends on the output error (<code>dZ2</code>) and the activation that fed into it (<code>A1</code>).</li>
+<li><code>db2 = np.sum(dZ2, axis=0, keepdims=True)</code>: The gradient for <code>b2</code> is simply the sum of the output layer's error.</li>
+<li><strong>Math:</strong> <span class="arithmatex">\(\frac{\partial L}{\partial W_2} = A_1^T \cdot \frac{\partial L}{\partial Z_2}\)</span> and <span class="arithmatex">\(\frac{\partial L}{\partial b_2} = \sum \frac{\partial L}{\partial Z_2}\)</span></li>
+</ul>
+<p><strong>3. Gradients for the Hidden Layer (<code>dZ1</code>)</strong></p>
+<p>Next, we propagate the error further back to the hidden layer.</p>
+<ul>
+<li><code>dA1 = np.dot(dZ2, self.W2.T)</code>: First, we calculate the error with respect to the hidden layer's <em>activation</em> <code>A1</code>.</li>
+<li><code>dZ1 = dA1.copy()</code> followed by <code>dZ1[A1 &lt;= 0] = 0</code>: This calculates the error with respect to the hidden layer's <em>pre-activation</em> <code>Z1</code>. This step applies the derivative of the <strong>ReLU</strong> function. The derivative is 1 for positive values and 0 for negative values, so we "kill" the gradient for any neuron that was inactive (<code>&lt;= 0</code>) during the forward pass.</li>
+<li><strong>Math:</strong> <span class="arithmatex">\(\frac{\partial L}{\partial Z_1} = \frac{\partial L}{\partial A_1} \cdot \frac{\partial A_1}{\partial Z_1} = (\frac{\partial L}{\partial Z_2} \cdot W_2^T) \cdot \text{ReLU}'(Z_1)\)</span></li>
+</ul>
+<p><strong>4. Gradients for <code>W1</code> and <code>b1</code></strong></p>
+<p>Finally, we calculate the gradients for the first layer's weights and bias using <code>dZ1</code>.</p>
+<ul>
+<li><code>dW1 = np.dot(X.T, dZ1)</code>: The gradient for <code>W1</code> depends on the hidden layer's error (<code>dZ1</code>) and the original input <code>X</code>.</li>
+<li><code>db1 = np.sum(dZ1, axis=0, keepdims=True)</code>: The gradient for <code>b1</code> is the sum of the hidden layer's error.</li>
+<li><strong>Math:</strong> <span class="arithmatex">\(\frac{\partial L}{\partial W_1} = X^T \cdot \frac{\partial L}{\partial Z_1}\)</span> and <span class="arithmatex">\(\frac{\partial L}{\partial b_1} = \sum \frac{\partial L}{\partial Z_1}\)</span></li>
+</ul>
+<hr />
+<h3>The Training Loop</h3>
+<p>This method orchestrates the entire training process.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
+    <span class="n">epoch_part_10</span> <span class="o">=</span> <span class="n">epochs</span><span class="o">//</span><span class="mi">10</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+      <span class="n">A1</span><span class="p">,</span> <span class="n">A2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward_pass</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+      <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cce_loss</span><span class="p">(</span><span class="n">A2</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="n">epoch_part_10</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">==</span> <span class="n">epochs</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;iteration </span><span class="si">%d</span><span class="s2">: loss </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">loss</span><span class="p">))</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">cce_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+
+      <span class="n">dW1</span><span class="p">,</span> <span class="n">dW2</span><span class="p">,</span> <span class="n">db1</span><span class="p">,</span> <span class="n">db2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">backward_pass</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">A1</span><span class="p">,</span> <span class="n">A2</span><span class="p">)</span>
+
+      <span class="bp">self</span><span class="o">.</span><span class="n">W1</span> <span class="o">-=</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">dW1</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">b1</span> <span class="o">-=</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">db1</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">W2</span> <span class="o">-=</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">dW2</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">b2</span> <span class="o">-=</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">db2</span>
+</code></pre></div>
+
+<ul>
+<li>It loops for a specified number of <code>epochs</code>.</li>
+<li>In each loop, it performs a <code>forward_pass</code> and <code>backward_pass</code>.</li>
+<li>It then updates the network's parameters using the <strong>gradient descent</strong> update rule: <code>parameter = parameter - learning_rate * gradient</code>.</li>
+<li>It also prints the loss periodically so we can monitor the training progress.</li>
+</ul>
+<hr />
+<h3>Using the Trained Model</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">A2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward_pass</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">y_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">A2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">y_hat</span>
+</code></pre></div>
+
+<p>Once the model is trained, this simple method takes new, unseen data <code>X</code>, performs a forward pass, and returns the class with the highest probability for each input using <code>np.argmax</code>.</p>
+<h3>Now finally executing our model</h3>
+<p>This code block brings everything together to prepare the data, train the network, and evaluate its performance.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">nn_model</span> <span class="o">=</span> <span class="n">NeuralNet</span><span class="p">(</span><span class="n">num_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">num_hidden_neurons</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">num_classes</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">nn_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>iteration 0: loss 1.098386
+...
+iteration 9000: loss 0.020325
+training accuracy: 0.99 %
+</code></pre></div>
+
+<ul>
+<li>
+<p><strong>Learning Progress</strong>: The printed output shows the loss at different iterations. The fact that the loss steadily decreases from 1.098 to 0.020 is a clear sign that our network is successfully learning the patterns in the data.</p>
+</li>
+<li>
+<p><strong>Final Accuracy</strong>: The last line calculates the model's accuracy on the training data. The result of 99% confirms that our neural network, built entirely from scratch, has successfully learned the complex, non-linear decision boundaries required to classify the spiral dataset. </p>
+</li>
+</ul>
+<h3>Plotting the Loss Curve</h3>
+<p>This snippet visualizes the model's learning progress over time.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">nn_model</span><span class="o">.</span><span class="n">cce_losses</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Epochs&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Cross Entropy Loss&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Cross Entropy Loss vs Epochs&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
+<figure style="margin: auto; text-align: center;">
+  <img src="../static/images/blog/ann_model_from_scratch/cce_losses.png" alt="dataframe preview">
+  <figcaption>Fig. 4: The Loss Curve </figcaption>
+</figure>
+
+<ul>
+<li>
+<p><code>plt.plot(nn_model.cce_losses)</code> takes the list of loss values that we saved during training and plots them.</p>
+</li>
+<li>
+<p>The resulting graph is a powerful diagnostic tool. A steady downward slope, as seen in this type of plot, is excellent visual confirmation that the model is successfully learning and minimizing its error with each epoch.</p>
+</li>
+</ul>
+<h3>Visualizing the Decision Boundary</h3>
+<p>This snippet creates a visualization to show exactly what non-linear boundaries our model has learned. </p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Create a grid of points</span>
+<span class="n">step</span> <span class="o">=</span> <span class="mf">0.02</span>
+<span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">step</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span><span class="p">,</span> <span class="n">step</span><span class="p">))</span>
+
+<span class="c1"># Predict the class for each point in the grid</span>
+<span class="n">y_hat</span> <span class="o">=</span> <span class="n">nn_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
+<span class="n">y_hat</span> <span class="o">=</span> <span class="n">y_hat</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Plot the colored regions and the original data</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">y_hat</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">tab20</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">hue</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;dark&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
+<figure style="margin: auto; text-align: center;">
+  <img src="../static/images/blog/ann_model_from_scratch/decision_boundary.png" alt="dataframe preview">
+  <figcaption>Fig. 5: Decision boundary over our spiral dataset</figcaption>
+</figure>
+
+<p>This code generates a "decision boundary" plot, which is one of the best ways to understand what a classifier is doing.</p>
+<ul>
+<li>
+<p>Create a Grid: First, it creates a fine grid of points that covers the entire area of the plot.</p>
+</li>
+<li>
+<p>Predict on Grid: It then uses our trained nn_model to predict the class (0, 1, or 2) for every single point on this grid.</p>
+</li>
+<li>
+<p>Plot Regions: The plt.contourf function creates a filled contour plot, assigning a color to each region of the grid based on the model's prediction.</p>
+</li>
+</ul>
+<p>The final visualization shows the beautiful, non-linear, spiral-shaped boundaries that our network has learned to perfectly separate the three classes. This is the ultimate proof that our from-scratch model works!</p>
+<h2>5. Key Takeaways and Endnote</h2>
+<p>Congratulations! Going through the process of building a neural network from scratch is a huge step toward mastering deep learning. Even if you go back to using high-level frameworks for your day-to-day work, you now have a powerful mental model of what's happening under the hood.</p>
+<p><strong>The core takeaways are:</strong></p>
+<ul>
+<li><strong>The Flow:</strong> Neural networks learn through a cycle: a <strong>forward pass</strong> to make a prediction, a <strong>loss function</strong> to quantify error, <strong>backpropagation</strong> to find out which parameters are responsible for the error, and <strong>gradient descent</strong> to update those parameters.</li>
+<li><strong>Non-linearity is Key:</strong> Activation functions are not an afterthought; they are the essential ingredient that allows networks to learn complex, non-linear patterns that are inaccessible to linear models.</li>
+<li><strong>Math is the Foundation:</strong> At the end of the day, a neural network is a differentiable function that is optimized through calculus. Understanding the roles of the dot product, activation functions, and derivatives demystifies the entire process.</li>
+</ul>
+<p>This foundation will serve you well as you explore more advanced architectures like CNNs and RNNs. You now know that no matter how complex the model, the fundamental principles of forward propagation, backpropagation, and optimization remain the same. Keep experimenting, and happy coding! 🚀✨</p>
+        </section>
+        </article>
+    </div>
+    <div class="container">
+    <hr class="footer-divider">
+</div>
+
+<footer class="site-footer">
+    <div class="container">
+        <p>&copy; 2025 by Raktim Patar. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="https://github.com/raktimpat" target="_blank">GitHub</a> &bull;
+            <a href="https://www.linkedin.com/in/raktim-patar73/" target="_blank">LinkedIn</a>
+        </div>
+    </div>
+</footer>
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
