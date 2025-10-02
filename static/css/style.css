@@ -226,23 +226,32 @@ p {
     color: #777;
     font-style: italic;
 }
-.post-content {
-    padding: 30px 0;
-}
-.post-content h2, .post-content h3 {
-    color: var(--primary-color);
-}
-.post-content pre {
-    background-color: #2d2d2d;
-    color: #f4f4f9;
-    padding: 15px;
-    border-radius: 5px;
-    overflow-x: auto;
-}
-.post-content code {
-    font-family: 'Courier New', Courier, monospace;
+/* Heading Colors in Blog Posts */
+.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6 {
+    color: #424a46; /* A dark, desaturated green-gray */
+    text-align: left;
+    margin-top: 30px;
+    margin-bottom: 15px;
 }
 
+/* Images in Blog Posts (Larger & Centered) */
+.post-content img {
+    max-width: 90%; /* Increase max-width for bigger images */
+    height: auto;
+    border-radius: 8px;
+    display: block; /* Important for centering */
+    margin: 30px auto; /* More vertical space, auto for horizontal centering */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+}
+
+/* Image Captions (if you have them) */
+.post-content figcaption {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666; /* Slightly darker than before for readability */
+    font-style: italic;
+}
 .back-link {
     display: inline-block;
     margin-bottom: 20px;
@@ -654,3 +663,72 @@ html {
         grid-template-columns: 1fr; /* Stack columns */
     }
 }
+
+/* --- Syntax Highlighting (Light Theme) --- */
+.codehilite {
+    background: #f8f9fa; /* Light, clean background */
+    color: #212529; /* Dark text */
+    padding: 18px 20px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef; /* Subtle border */
+    overflow-x: auto;
+    font-family: 'Fira Code', 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 25px 0;
+}
+
+.codehilite pre {
+    margin: 0;
+    background: transparent; /* Ensure pre tag has no background */
+}
+
+/* --- New Syntax Colors for Light Background --- */
+.codehilite .k { color: #d73a49; } /* Keyword (e.g., def, import) - red */
+.codehilite .s1, .codehilite .s2 { color: #032f62; } /* String - dark blue */
+.codehilite .c1, .codehilite .c { color: #6a737d; } /* Comment - gray */
+.codehilite .o { color: #d73a49; } /* Operator - red */
+.codehilite .n { color: #212529; } /* Name - default dark */
+.codehilite .mi, .codehilite .mf { color: #005cc5; } /* Number - blue */
+.codehilite .kn { color: #d73a49; } /* import, from */
+.codehilite .nn { color: #6f42c1; } /* package name - purple */
+.codehilite .p { color: #212529; } /* parenthesis - default dark */
+.codehilite .nf { color: #6f42c1; } /* Function name - purple */
+.codehilite .nc { color: #c85022; } /* Class name - orange */
+
+/* --- Copy Button for Code Blocks --- */
+
+.code-wrapper {
+    position: relative; /* This is the anchor for the button */
+}
+
+.copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #e9ecef;
+    color: #555;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8rem;
+    cursor: pointer;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.2s ease-in-out;
+}
+
+/* Show the button when hovering over the code block */
+.code-wrapper:hover .copy-btn {
+    opacity: 1;
+}
+
+.copy-btn:hover {
+    background-color: #ced4da;
+}
+
+/* Style for the checkmark icon */
+.copy-btn .fas.fa-check {
+    color: #28a745; /* Green checkmark */
+}
+

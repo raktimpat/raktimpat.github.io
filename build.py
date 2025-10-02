@@ -27,8 +27,31 @@ for filename in os.listdir(posts_dir):
                 md_content = parts[2]
             else:
                 frontmatter, md_content = {}, content
+            
+            # --- UPDATED MARKDOWN CONVERSION ---
+            # Define the extensions to use for parsing
+            extensions = [
+                'fenced_code',         # Enables code blocks with ```
+                'codehilite',          # Enables syntax highlighting
+                'pymdownx.emoji',      # Enables emoji shortcodes like :rocket:
+                'pymdownx.arithmatex' 
+            ]
 
-            html_content = markdown.markdown(md_content, extensions=['fenced_code', 'codehilite'])
+            # Configure the emoji extension
+            extension_configs={
+                    # This config ONLY targets the math extension,
+                    # leaving the emoji extension to its working defaults.
+                    'pymdownx.arithmatex': {
+                        'generic': True
+                    }
+                }
+
+            html_content = markdown.markdown(
+                md_content, 
+                extensions=extensions,
+                extension_configs=extension_configs
+            )
+            # --- END OF UPDATE ---
             
             posts.append({
                 'title': frontmatter.get('title', 'Untitled Post'),
@@ -38,6 +61,8 @@ for filename in os.listdir(posts_dir):
                 'slug': os.path.splitext(filename)[0]
             })
 
+# --- (The rest of the script remains the same) ---
+
 # --- Generate Individual Blog Pages ---
 post_template = env.get_template("post.html")
 for post in posts:
@@ -46,18 +71,16 @@ for post in posts:
         f.write(post_template.render(post=post, title=post['title'], date=post['date'], content=post['content']))
     print(f"Generated post: {output_path}")
 
-# --- Generate Main Pages (index, all_blogs, projects) ---
-# For each page, we get the template and render it.
+# --- Generate Main Pages ---
 pages_to_build = {
     "base.html": "index.html",
     "blog_all.html": "blog.html",
-    "projects_all.html": "projects.html" # We need to create this template
+    "projects_all.html": "projects.html"
 }
 
 for template_name, output_name in pages_to_build.items():
     template = env.get_template(template_name)
     with open(output_name, 'w', encoding='utf-8') as f:
-        # Pass the 'posts' variable to any template that might need it
         f.write(template.render(posts=posts))
     print(f"Generated page: {output_name}")
 

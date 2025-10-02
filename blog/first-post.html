@@ -8,6 +8,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="/static/css/style.css">
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
     <header class="navbar-container">
@@ -39,7 +50,7 @@
                 <h1>My First AI Blog Post</h1>
                 <p class="post-meta">October 01, 2025</p>
             </header>
-            <section class="post-content">
+            <div class="post-content">
                 <h2>The Rise of the Transformer</h2>
 <p>The world of AI was forever changed with the 2017 paper "Attention Is All You Need". This paper introduced the <strong>Transformer architecture</strong>, which has become the foundation for most state-of-the-art NLP models, including BERT and GPT.</p>
 <h3>Key Components</h3>
@@ -55,7 +66,7 @@ def self_attention(query, key, value):
     attention_weights = F.softmax(scores, dim=-1)
     output = torch.matmul(attention_weights, value)
     return output</p>
-            </section>
+            </div>
         </article>
     </div>
     <div class="container">
@@ -71,5 +82,6 @@ def self_attention(query, key, value):
         </div>
     </div>
 </footer>
+    <script src="/static/js/main.js"></script>
 </body>
 </html>

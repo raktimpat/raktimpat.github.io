@@ -8,6 +8,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="/static/css/style.css">
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
     {% include 'header.html' %}
@@ -18,11 +29,12 @@
                 <h1>{{ title }}</h1>
                 <p class="post-meta">{{ date }}</p>
             </header>
-            <section class="post-content">
-                {{ content | safe }}
-            </section>
+            <div class="post-content">
+                {{ post.content | safe }}
+            </div>
         </article>
     </div>
     {% include 'footer.html' %}
+    <script src="/static/js/main.js"></script>
 </body>
 </html>
