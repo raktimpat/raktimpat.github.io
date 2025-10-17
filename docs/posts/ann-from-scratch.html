@@ -1,58 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>🧠 Decoding the Deep Learning Black Box: Building a Neural Net with NumPy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="../static/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="/static/css/style.css">
     <script>
         MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']]
-            },
-            svg: {
-                fontCache: 'global'
-            }
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          }
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            transition: all 0.3s ease-in-out;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+        /* Styles for generated markdown content */
+        .prose h1, .prose h2, .prose h3 { font-weight: 800; }
+        .prose p { margin-bottom: 1.25em; }
+        .prose a { color: #1a56db; text-decoration: underline; }
+        .prose pre { background-color: #1f2937; color: #f3f4f6; padding: 1em; border-radius: 0.5em; overflow-x: auto; }
+        .prose code { font-family: 'Courier New', Courier, monospace; }
+        .prose blockquote { border-left: 0.25em solid #d1d5db; padding-left: 1em; font-style: italic; }
+    </style>
 </head>
-<body>
-    <header class="navbar-container">
-    <nav class="navbar">
-        <a href="/" class="nav-logo">
-            <img src="/static/images/rp_logo.png" alt="RP Logo">
-        </a>
-        <ul class="nav-menu">
-            <li><a href="/#about">About Me</a></li>
-            <li><a href="/projects.html">Projects</a></li>
-            <li><a href="/blog.html">Blog</a></li>
-        </ul>
+<body class="text-gray-800">
 
-        <div class="nav-right">
-            <a href="https://github.com/raktimpat" target="_blank" class="nav-icon" aria-label="GitHub Profile">
-                <i class="fab fa-github"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/raktim-patar73/" target="_blank" class="nav-icon" aria-label="LinkedIn Profile">
-                <i class="fab fa-linkedin"></i>
-            </a>
-            <a href="/#contact" class="btn btn-contact">Contact</a>
+    <!-- Header & Navbar -->
+    <header id="navbar" class="navbar sticky top-0 left-0 right-0 z-50 p-4">
+        <div class="container mx-auto flex justify-between items-center max-w-6xl">
+            <a href="../index.html"><img src="../static/images/logo.png" alt="R. Patar Logo" class="my-logo"></a>
+            <nav class="hidden md:flex items-center space-x-6 bg-black text-white px-6 py-2 rounded-full">
+                <a href="../about.html" class="hover:text-gray-300">About Me</a>
+                <a href="../projects.html" class="hover:text-gray-300">Projects</a>
+                <a href="../blogs.html" class="hover:text-gray-300">Blog</a>
+                <a href="https://github.com/raktimpat" target="_blank" class="hover:text-gray-300"><i data-lucide="github"></i></a>
+                <a href="https://www.linkedin.com/in/raktim-patar73/" target="_blank" class="hover:text-gray-300"><i data-lucide="linkedin"></i></a>
+                <a href="../index.html#contact" class="bg-white text-black px-4 py-2 rounded-full font-semibold hover:bg-gray-200">Contact</a>
+            </nav>
+             <button id="mobile-menu-button" class="md:hidden">
+                <i data-lucide="menu"></i>
+            </button>
         </div>
-    </nav>
-</header>
-    <div class="container">
-        <a href="/" class="back-link">&larr; Back to Home</a>
-        <article>
-            <header class="post-header">
-            <h1>🧠 Decoding the Deep Learning Black Box: Building a Neural Net with NumPy</h1>
-            <p class="post-meta">By Raktim Patar on August 15, 2025</p>
-        </header>
-        <section class="post-content">
-            <figure style="margin: auto; text-align: center;">
-  <img src="../static/images/blog/ann_model_from_scratch/nn.png" alt="dataframe preview">
+         <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white mt-4 rounded-lg shadow-lg">
+            <a href="../about.html" class="block py-2 px-4 hover:bg-gray-100">About Me</a>
+            <a href="../projects.html" class="block py-2 px-4 hover:bg-gray-100">Projects</a>
+            <a href="../blogs.html" class="block py-2 px-4 hover:bg-gray-100">Blog</a>
+            <a href="../index.html#contact" class="block py-2 px-4 hover:bg-gray-100">Contact</a>
+             <div class="flex justify-center p-4">
+                <a href="https://github.com" target="_blank" class="p-2"><i data-lucide="github"></i></a>
+                <a href="https://linkedin.com" target="_blank" class="p-2"><i data-lucide="linkedin"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-12">
+        <article class="container mx-auto max-w-3xl px-4 bg-white py-10 rounded-lg shadow-lg">
+            <header class="text-center mb-10 border-b pb-8">
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-3">🧠 Decoding the Deep Learning Black Box: Building a Neural Net with NumPy</h1>
+                <p class="text-gray-500">By Raktim Patar &middot; Published on August 15, 2025</p>
+            </header>
+            <div class="prose max-w-none">
+                <figure style="margin: auto; text-align: center; justify-content: center;">
+  <img src="../static/images/blog_images/ann_model_from_scratch/nn.png" alt="dataframe preview">
   <figcaption>Fig. 1: Comparison between a human neuron and a artificial neuron</figcaption>
 </figure>
 
@@ -80,8 +104,8 @@ This dataset consists of three classes of data points arranged in interlocking s
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </code></pre></div>
 
-<figure style="width: 80%; max-width: 500px; margin: auto; text-align: center;">
-  <img src="../static/images/blog/ann_model_from_scratch/dataframe_head.png" alt="preview dataframe">
+<figure style="width: 80%; max-width: 500px; margin: auto; text-align: center; justify-content: center;">
+  <img src="../static/images/blog_images/ann_model_from_scratch/dataframe_head.png" alt="preview dataframe">
   <figcaption>Fig. 2: Dataframe preview</figcaption>
 </figure>
 
@@ -89,8 +113,8 @@ This dataset consists of three classes of data points arranged in interlocking s
 <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;x1&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;x2&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;bright&quot;</span><span class="p">)</span>
 </code></pre></div>
 
-<figure style="width: 80%; max-width: 500px; margin: auto; text-align: center;">
-  <img src="../static/images/blog/ann_model_from_scratch/spiral.png" alt="scatter plot spiral">
+<figure style="width: 80%; max-width: 500px; margin: auto; text-align: center; justify-content: center;">
+  <img src="../static/images/blog_images/ann_model_from_scratch/spiral.png" alt="scatter plot spiral">
   <figcaption>Fig. 3: Spiral</figcaption>
 </figure>
 
@@ -122,33 +146,33 @@ This dataset consists of three classes of data points arranged in interlocking s
 <p>This is the process of passing data through the network to get a prediction. For a simple network with one hidden layer:</p>
 <ol>
 <li>
-<p><strong>Input to Hidden Layer:</strong> We perform a linear transformation of the input data <code>X</code> using the first set of weights (<span class="arithmatex">\(W_1\)</span>) and biases (<span class="arithmatex">\(b_1\)</span>).</p>
-<div class="arithmatex">\[Z^{[1]} = X \cdot W_1 + b_1\]</div>
+<p><strong>Input to Hidden Layer:</strong> We perform a linear transformation of the input data <code>X</code> using the first set of weights ($W_1$) and biases ($b_1$).</p>
+<p>$$Z^{[1]} = X \cdot W_1 + b_1$$</p>
 </li>
 <li>
 <p><strong>Activation:</strong> We apply a non-linear activation function, like ReLU (Rectified Linear Unit), to introduce non-linearity.</p>
-<div class="arithmatex">\[A^{[1]} = \text{ReLU}(Z^{[1]})\]</div>
+<p>$$A^{[1]} = \text{ReLU}(Z^{[1]})$$</p>
 </li>
 <li>
-<p><strong>Hidden to Output Layer:</strong> We perform a second linear transformation using the second set of weights (<span class="arithmatex">\(W_2\)</span>) and biases (<span class="arithmatex">\(b_2\)</span>).</p>
-<div class="arithmatex">\[Z^{[2]} = A^{[1]} \cdot W_2 + b_2\]</div>
+<p><strong>Hidden to Output Layer:</strong> We perform a second linear transformation using the second set of weights ($W_2$) and biases ($b_2$).</p>
+<p>$$Z^{[2]} = A^{[1]} \cdot W_2 + b_2$$</p>
 </li>
 <li>
-<p><strong>Softmax Activation:</strong> To get probabilities for our three classes, we apply the Softmax function to the final scores (<span class="arithmatex">\(Z^{[2]}\)</span>). Softmax turns a vector of scores into a probability distribution, where all outputs are between 0 and 1 and sum to 1.</p>
-<div class="arithmatex">\[\hat{y} = \text{Softmax}(Z^{[2]}) = \frac{e^{Z^{[2]}}}{\sum e^{Z^{[2]}}}\]</div>
+<p><strong>Softmax Activation:</strong> To get probabilities for our three classes, we apply the Softmax function to the final scores ($Z^{[2]}$). Softmax turns a vector of scores into a probability distribution, where all outputs are between 0 and 1 and sum to 1.</p>
+<p>$$\hat{y} = \text{Softmax}(Z^{[2]}) = \frac{e^{Z^{[2]}}}{\sum e^{Z^{[2]}}}$$</p>
 </li>
 </ol>
-<p>The result, <span class="arithmatex">\(\hat{y}\)</span>, is our model's prediction.</p>
+<p>The result, $\hat{y}$, is our model's prediction.</p>
 <h3>The Loss Function: Measuring Error</h3>
 <p>Now that we have a prediction, we need to measure how wrong it is. For multi-class classification, we use the <strong>Categorical Cross-Entropy Loss</strong>.</p>
 <p>The formula looks intimidating, but the concept is simple: it heavily penalizes the model when it predicts the wrong class with high confidence.</p>
-<div class="arithmatex">\[L = -\frac{1}{m} \sum_{i=1}^{m} \sum_{k=1}^{K} y_{ik} \log(\hat{y}_{ik})\]</div>
+<p>$$L = -\frac{1}{m} \sum_{i=1}^{m} \sum_{k=1}^{K} y_{ik} \log(\hat{y}_{ik})$$</p>
 <p>Where:</p>
 <ul>
-<li><span class="arithmatex">\(m\)</span> is the number of training examples.</li>
-<li><span class="arithmatex">\(K\)</span> is the number of classes (3 in our case).</li>
-<li><span class="arithmatex">\(y_{ik}\)</span> is 1 if example <span class="arithmatex">\(i\)</span> belongs to class <span class="arithmatex">\(k\)</span>, and 0 otherwise.</li>
-<li><span class="arithmatex">\(\hat{y}_{ik}\)</span> is the model's predicted probability that example <span class="arithmatex">\(i\)</span> belongs to class <span class="arithmatex">\(k\)</span>.</li>
+<li>$m$ is the number of training examples.</li>
+<li>$K$ is the number of classes (3 in our case).</li>
+<li>$y_{ik}$ is 1 if example $i$ belongs to class $k$, and 0 otherwise.</li>
+<li>$\hat{y}_{ik}$ is the model's predicted probability that example $i$ belongs to class $k$.</li>
 </ul>
 <p>Our goal is to adjust the weights and biases to make this loss value as small as possible.</p>
 <h3>Backpropagation and Gradient Descent: Learning from Error</h3>
@@ -159,12 +183,12 @@ This dataset consists of three classes of data points arranged in interlocking s
 </li>
 <li>
 <p><strong>Gradient Descent:</strong> Once we have the gradients, we can update our parameters. We take a small step in the <em>opposite</em> direction of the gradient, because we want to <em>decrease</em> the loss. This update rule is applied to every weight and bias:</p>
-<div class="arithmatex">\[\theta_{\text{new}} = \theta_{\text{old}} - \alpha \frac{\partial L}{\partial \theta}\]</div>
+<p>$$\theta_{\text{new}} = \theta_{\text{old}} - \alpha \frac{\partial L}{\partial \theta}$$</p>
 <p>Where:</p>
 <ul>
-<li><span class="arithmatex">\(\theta\)</span> is any parameter (a weight or a bias).</li>
-<li><span class="arithmatex">\(\alpha\)</span> is the <strong>learning rate</strong>, a small hyperparameter that controls the size of our update step.</li>
-<li><span class="arithmatex">\(\frac{\partial L}{\partial \theta}\)</span> is the gradient calculated during backpropagation.</li>
+<li>$\theta$ is any parameter (a weight or a bias).</li>
+<li>$\alpha$ is the <strong>learning rate</strong>, a small hyperparameter that controls the size of our update step.</li>
+<li>$\frac{\partial L}{\partial \theta}$ is the gradient calculated during backpropagation.</li>
 </ul>
 </li>
 </ol>
@@ -261,28 +285,28 @@ Let's break down what each part of the <code>NeuralNet</code> class does.</p>
 <li><code>dZ2 = A2.copy()</code>: Start with the predicted probabilities.</li>
 <li><code>dZ2[range(m),y] -= 1</code>: For each example, subtract 1 from the column corresponding to the correct class. This efficiently computes <code>(Predicted - True)</code> without creating a full one-hot matrix.</li>
 <li><code>dZ2 /= m</code>: We average the gradient across the batch.</li>
-<li><strong>Math:</strong> <span class="arithmatex">\(\frac{\partial L}{\partial Z_2} = A_2 - Y_{\text{one-hot}}\)</span></li>
+<li><strong>Math:</strong> $\frac{\partial L}{\partial Z_2} = A_2 - Y_{\text{one-hot}}$</li>
 </ul>
 <p><strong>2. Gradients for <code>W2</code> and <code>b2</code></strong></p>
 <p>Now we use <code>dZ2</code> to find the gradients for the second layer's weights and bias.</p>
 <ul>
 <li><code>dW2 = np.dot(A1.T, dZ2)</code>: This calculates the gradient for <code>W2</code>. The error contribution of <code>W2</code> depends on the output error (<code>dZ2</code>) and the activation that fed into it (<code>A1</code>).</li>
 <li><code>db2 = np.sum(dZ2, axis=0, keepdims=True)</code>: The gradient for <code>b2</code> is simply the sum of the output layer's error.</li>
-<li><strong>Math:</strong> <span class="arithmatex">\(\frac{\partial L}{\partial W_2} = A_1^T \cdot \frac{\partial L}{\partial Z_2}\)</span> and <span class="arithmatex">\(\frac{\partial L}{\partial b_2} = \sum \frac{\partial L}{\partial Z_2}\)</span></li>
+<li><strong>Math:</strong> $\frac{\partial L}{\partial W_2} = A_1^T \cdot \frac{\partial L}{\partial Z_2}$ and $\frac{\partial L}{\partial b_2} = \sum \frac{\partial L}{\partial Z_2}$</li>
 </ul>
 <p><strong>3. Gradients for the Hidden Layer (<code>dZ1</code>)</strong></p>
 <p>Next, we propagate the error further back to the hidden layer.</p>
 <ul>
 <li><code>dA1 = np.dot(dZ2, self.W2.T)</code>: First, we calculate the error with respect to the hidden layer's <em>activation</em> <code>A1</code>.</li>
 <li><code>dZ1 = dA1.copy()</code> followed by <code>dZ1[A1 &lt;= 0] = 0</code>: This calculates the error with respect to the hidden layer's <em>pre-activation</em> <code>Z1</code>. This step applies the derivative of the <strong>ReLU</strong> function. The derivative is 1 for positive values and 0 for negative values, so we "kill" the gradient for any neuron that was inactive (<code>&lt;= 0</code>) during the forward pass.</li>
-<li><strong>Math:</strong> <span class="arithmatex">\(\frac{\partial L}{\partial Z_1} = \frac{\partial L}{\partial A_1} \cdot \frac{\partial A_1}{\partial Z_1} = (\frac{\partial L}{\partial Z_2} \cdot W_2^T) \cdot \text{ReLU}'(Z_1)\)</span></li>
+<li><strong>Math:</strong> $\frac{\partial L}{\partial Z_1} = \frac{\partial L}{\partial A_1} \cdot \frac{\partial A_1}{\partial Z_1} = (\frac{\partial L}{\partial Z_2} \cdot W_2^T) \cdot \text{ReLU}'(Z_1)$</li>
 </ul>
 <p><strong>4. Gradients for <code>W1</code> and <code>b1</code></strong></p>
 <p>Finally, we calculate the gradients for the first layer's weights and bias using <code>dZ1</code>.</p>
 <ul>
 <li><code>dW1 = np.dot(X.T, dZ1)</code>: The gradient for <code>W1</code> depends on the hidden layer's error (<code>dZ1</code>) and the original input <code>X</code>.</li>
 <li><code>db1 = np.sum(dZ1, axis=0, keepdims=True)</code>: The gradient for <code>b1</code> is the sum of the hidden layer's error.</li>
-<li><strong>Math:</strong> <span class="arithmatex">\(\frac{\partial L}{\partial W_1} = X^T \cdot \frac{\partial L}{\partial Z_1}\)</span> and <span class="arithmatex">\(\frac{\partial L}{\partial b_1} = \sum \frac{\partial L}{\partial Z_1}\)</span></li>
+<li><strong>Math:</strong> $\frac{\partial L}{\partial W_1} = X^T \cdot \frac{\partial L}{\partial Z_1}$ and $\frac{\partial L}{\partial b_1} = \sum \frac{\partial L}{\partial Z_1}$</li>
 </ul>
 <hr />
 <h3>The Training Loop</h3>
@@ -350,8 +374,8 @@ training accuracy: 0.99 %
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 
-<figure style="margin: auto; text-align: center;">
-  <img src="../static/images/blog/ann_model_from_scratch/cce_losses.png" alt="dataframe preview">
+<figure style="margin: auto; text-align: center; justify-content: center;">
+  <img src="../static/images/blog_images/ann_model_from_scratch/cce_losses.png" alt="dataframe preview">
   <figcaption>Fig. 4: The Loss Curve </figcaption>
 </figure>
 
@@ -381,8 +405,8 @@ training accuracy: 0.99 %
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 
-<figure style="margin: auto; text-align: center;">
-  <img src="../static/images/blog/ann_model_from_scratch/decision_boundary.png" alt="dataframe preview">
+<figure style="margin: auto; text-align: center; justify-content: center;">
+  <img src="../static/images/blog_images/ann_model_from_scratch/decision_boundary.png" alt="dataframe preview">
   <figcaption>Fig. 5: Decision boundary over our spiral dataset</figcaption>
 </figure>
 
@@ -408,22 +432,32 @@ training accuracy: 0.99 %
 <li><strong>Math is the Foundation:</strong> At the end of the day, a neural network is a differentiable function that is optimized through calculus. Understanding the roles of the dot product, activation functions, and derivatives demystifies the entire process.</li>
 </ul>
 <p>This foundation will serve you well as you explore more advanced architectures like CNNs and RNNs. You now know that no matter how complex the model, the fundamental principles of forward propagation, backpropagation, and optimization remain the same. Keep experimenting, and happy coding! 🚀✨</p>
-        </section>
+            </div>
         </article>
-    </div>
-    <div class="container">
-    <hr class="footer-divider">
-</div>
+    </main>
 
-<footer class="site-footer">
-    <div class="container">
-        <p>&copy; 2025 by Raktim Patar. All rights reserved.</p>
-        <div class="footer-links">
-            <a href="https://github.com/raktimpat" target="_blank">GitHub</a> &bull;
-            <a href="https://www.linkedin.com/in/raktim-patar73/" target="_blank">LinkedIn</a>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 mt-12">
+        <div class="container mx-auto max-w-5xl px-4 text-center">
+            <p>&copy; 2025 by Raktim Patar. All rights reserved.</p>
+            <div class="flex justify-center space-x-4 mt-4">
+                <a href="https://github.com" target="_blank" class="hover:text-gray-400">GitHub</a>
+                <span>&middot;</span>
+                <a href="https://linkedin.com" target="_blank" class="hover:text-gray-400">LinkedIn</a>
+            </div>
         </div>
-    </div>
-</footer>
-    <script src="/static/js/main.js"></script>
+    </footer>
+     <script src="./static/js/main.js"></script>
+    <script>
+        lucide.createIcons();
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+
 </body>
 </html>

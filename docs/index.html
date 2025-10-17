@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raktim Patar - AI/ML Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Link to external stylesheet -->
+    <link rel="stylesheet" href="./static/css/style.css">
+</head>
+<body class="text-gray-800">
+
+    <!-- Header & Navbar -->
+    <header id="navbar" class="navbar fixed top-0 left-0 right-0 z-50 p-4">
+        <div class="container mx-auto flex justify-between items-center max-w-6xl">
+            <a href="./index.html"><img src="./static/images/logo.png" alt="R. Patar Logo" class="my-logo"></a>
+            <nav class="hidden md:flex items-center space-x-6 bg-black text-white px-6 py-2 rounded-full">
+                <a href="./about.html" class="hover:text-gray-300">About Me</a>
+                <a href="./projects.html" class="hover:text-gray-300">Projects</a>
+                <a href="./blogs.html" class="hover:text-gray-300">Blog</a>
+                <a href="https://github.com/raktimpat" target="_blank" class="hover:text-gray-300"><i data-lucide="github"></i></a>
+                <a href="https://www.linkedin.com/in/raktim-patar73/" target="_blank" class="hover:text-gray-300"><i data-lucide="linkedin"></i></a>
+                <a href="#contact" class="bg-white text-black px-4 py-2 rounded-full font-semibold hover:bg-gray-200">Contact</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white mt-4 rounded-lg shadow-lg">
+            <a href="./about.html" class="block py-2 px-4 hover:bg-gray-100">About Me</a>
+            <a href="./projects.html" class="block py-2 px-4 hover:bg-gray-100">Projects</a>
+            <a href="./blogs.html" class="block py-2 px-4 hover:bg-gray-100">Blog</a>
+            <a href="#contact" class="block py-2 px-4 hover:bg-gray-100">Contact</a>
+             <div class="flex justify-center p-4">
+                <a href="https://github.com" target="_blank" class="p-2"><i data-lucide="github"></i></a>
+                <a href="https://linkedin.com" target="_blank" class="p-2"><i data-lucide="linkedin"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-24">
+        <!-- Hero Section -->
+        <section id="home" class="text-center py-20">
+            <div class="container mx-auto max-w-4xl px-4">
+                <img src="./static/images/profile.png" alt="Raktim Patar" class="w-32 h-32 rounded-full mx-auto mb-6 ring-4 ring-gray-200">
+                <h1 class="text-5xl md:text-7xl font-extrabold mb-4 leading-tight">Hi, I'm Raktim Patar. <br/> AI/ML Engineer</h1>
+                <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-8">Translating complex AI into practical applications for commercial success and human progress.</p>
+                <div class="flex justify-center items-center space-x-4">
+                    <a href="#contact" class="bg-gray-900 text-white px-6 py-3 rounded-full font-semibold hover:bg-gray-700 transition duration-300">Hire Me!</a>
+                    <a href="./resume.pdf" download="RaktimPatar_Resume.pdf" class="bg-green-100 text-green-800 px-6 py-3 rounded-full font-semibold hover:bg-green-200 transition duration-300 flex items-center">
+                        <i data-lucide="download" class="mr-2 h-5 w-5"></i>
+                        Resume
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Slider -->
+        <div class="py-12 bg-white overflow-x-hidden">
+            <div class="skill-slider">
+                <div class="flex items-center space-x-12 px-6">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS" class="h-8">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/googlecloud/googlecloud-original-wordmark.svg" alt="GCP" class="h-8">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/tensorflow/tensorflow-original-wordmark.svg" alt="Tensorflow" class="h-8">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original-wordmark.svg" alt="Python" class="h-8">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/pytorch/pytorch-original-wordmark.svg" alt="PyTorch" class="h-8">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original-wordmark.svg" alt="Docker" class="h-8">
+                    <!-- Duplicate for seamless loop -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-20 bg-white">
+            <div class="container mx-auto max-w-5xl px-4">
+                <h2 class="text-4xl font-bold text-center mb-12">Projects</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Project Card 1 -->
+                    <div class="card bg-white p-6 rounded-lg shadow-md">
+                        <img src="./static/images/cognidoc-preview.png" alt="Project One" class="rounded-lg mb-4">
+                        <h3 class="text-2xl font-bold mb-2">CogniDoc</h3>
+                        <p class="text-gray-600 mb-4">RAG-based Document Analysis Platform.</p>
+                        <a href="https://cogni-doc.vercel.app/" class="bg-gray-900 text-white px-5 py-2 rounded-full font-semibold hover:bg-gray-700 transition duration-300 inline-block">Live Demo</a>
+                        <a href="https://github.com/raktimpat/cogni-doc-v1" class="bg-gray-900 text-white px-5 py-2 rounded-full font-semibold hover:bg-gray-700 transition duration-300 inline-block">View on GitHub</a>
+                    </div>
+                    <!-- Project Card 2 -->
+                    <div class="card bg-white p-6 rounded-lg shadow-md">
+                        <img src="./static/images/acousticsense-preview.png" alt="Project Two" class="rounded-lg mb-4">
+                        <h3 class="text-2xl font-bold mb-2">AcousticSense</h3>
+                        <p class="text-gray-600 mb-4">Real-Time urban sound classification app using deep-learning.</p>
+                        <a href="https://acoustic-gradio-service-465006496911.us-central1.run.app" class="bg-gray-900 text-white px-5 py-2 rounded-full font-semibold hover:bg-gray-700 transition duration-300 inline-block">Live Demo</a>
+                        <a href="https://github.com/raktimpat/acousticsense-app" class="bg-gray-900 text-white px-5 py-2 rounded-full font-semibold hover:bg-gray-700 transition duration-300 inline-block">View on GitHub</a>
+                    </div>
+                </div>
+                <div class="text-center mt-12">
+                    <a href="./projects.html" class="bg-gray-200 text-gray-800 px-6 py-3 rounded-full font-semibold hover:bg-gray-300 transition duration-300">View All Projects &rarr;</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Section -->
+        <section id="blog" class="py-20">
+            <div class="container mx-auto max-w-5xl px-4">
+                <h2 class="text-4xl font-bold text-center mb-12">Writings & Thoughts</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Blog Post Card 1 -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-2xl font-bold mb-2 flex items-start"><span class="text-2xl mr-3">🧠</span> Decoding the Deep Learning Black Box: Building a Neural Net with NumPy</h3>
+                        <p class="text-sm text-gray-500 mb-2">By Raktim Patar</p>
+                        <p class="text-gray-600 mb-4">A step-by-step tutorial on building a neural network from scratch using only Python and NumPy. Learn the core principles of forward propagation, backpropagation, and gradient descent by solving a non-linear, multi-class classification problem without TensorFlow or PyTorch.</p>
+                        <p class="text-xs text-gray-400 mb-4">October 17, 2025</p>
+                        <a href="./posts/ann-from-scratch.html" class="bg-gray-900 text-white px-5 py-2 rounded-full font-semibold hover:bg-gray-700 transition duration-300 inline-block">Read More</a>
+                    </div>
+                    <!-- Blog Post Card 2 -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-2xl font-bold mb-2">How to Build a Linear Regression Model from Scratch in Python</h3>
+                         <p class="text-sm text-gray-500 mb-2">By Raktim Patar</p>
+                        <p class="text-gray-600 mb-4">We'll go beyond the libraries and build a fully functional linear regression model from the ground up, using only Python and NumPy. This tutorial covers the math, the code, and the intuition behind gradient descent.</p>
+                        <p class="text-xs text-gray-400 mb-4">June 10, 2025</p>
+                        <a href="./posts/linear-model-from-scratch.html" class="bg-gray-900 text-white px-5 py-2 rounded-full font-semibold hover:bg-gray-700 transition duration-300 inline-block">Read More</a>
+                    </div>
+                </div>
+                 <div class="text-center mt-12">
+                    <a href="./blogs.html" class="bg-gray-200 text-gray-800 px-6 py-3 rounded-full font-semibold hover:bg-gray-300 transition duration-300">View All Posts &rarr;</a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- About Me Snippet -->
+        <section id="about-snippet" class="py-20">
+            <div class="container mx-auto max-w-3xl px-4 text-center">
+                 <h2 class="text-4xl font-bold text-center mb-4">About Me</h2>
+                 <p class="text-lg text-gray-600 mb-8">
+                    I'm an AI/ML Engineer passionate about building intelligent systems that solve real-world problems. My journey into artificial intelligence began with a fascination for data and its power to tell stories and predict futures.
+                </p>
+                <a href="./about.html" class="bg-gray-900 text-white px-6 py-3 rounded-full font-semibold hover:bg-gray-700 transition duration-300">Learn More About Me</a>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-white">
+             <div class="container mx-auto max-w-2xl px-4">
+                <h2 class="text-4xl font-bold text-center mb-4">Get In Touch</h2>
+                <p class="text-center text-gray-600 mb-12">I'm always open to discussing new projects, creative ideas, or opportunities to be part of an ambitious vision.</p>
+                <form action="#" method="POST" class="space-y-6">
+                    <div>
+                        <input type="text" name="name" placeholder="Your Name" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent transition">
+                    </div>
+                     <div>
+                        <input type="email" name="email" placeholder="Your Email" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent transition">
+                    </div>
+                    <div>
+                        <textarea name="message" rows="5" placeholder="Your Message" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent transition"></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="bg-gray-900 text-white px-8 py-3 rounded-full font-semibold hover:bg-gray-700 transition duration-300 w-full md:w-auto">Send Message</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="container mx-auto max-w-5xl px-4 text-center">
+            <p>&copy; 2025 by Raktim Patar. All rights reserved.</p>
+            <div class="flex justify-center space-x-4 mt-4">
+                <a href="https://github.com" target="_blank" class="hover:text-gray-400">GitHub</a>
+                <span>&middot;</span>
+                <a href="https://linkedin.com" target="_blank" class="hover:text-gray-400">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Link to external JavaScript file -->
+    <script src="./static/js/main.js"></script>
+</body>
+</html>
+

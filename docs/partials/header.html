@@ -1,0 +1,32 @@
+<!-- 
+  This is the header component. 
+  Copy and paste this content into your HTML pages to ensure a consistent navigation bar.
+  Adjust the file paths (e.g., './about.html' vs '../about.html') depending on the location of your HTML file.
+-->
+<header id="navbar" class="navbar fixed top-0 left-0 right-0 z-50 p-4">
+    <div class="container mx-auto flex justify-between items-center max-w-6xl">
+        <a href="./index.html" class="text-2xl font-bold">R. Patar</a>
+        <nav class="hidden md:flex items-center space-x-6 bg-black text-white px-6 py-2 rounded-full">
+            <a href="./about.html" class="hover:text-gray-300">About Me</a>
+            <a href="./projects.html" class="hover:text-gray-300">Projects</a>
+            <a href="./blogs.html" class="hover:text-gray-300">Blog</a>
+            <a href="https://github.com" target="_blank" class="hover:text-gray-300"><i data-lucide="github"></i></a>
+            <a href="https://linkedin.com" target="_blank" class="hover:text-gray-300"><i data-lucide="linkedin"></i></a>
+            <a href="./index.html#contact" class="bg-white text-black px-4 py-2 rounded-full font-semibold hover:bg-gray-200">Contact</a>
+        </nav>
+        <button id="mobile-menu-button" class="md:hidden">
+            <i data-lucide="menu"></i>
+        </button>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white mt-4 rounded-lg shadow-lg">
+        <a href="./about.html" class="block py-2 px-4 hover:bg-gray-100">About Me</a>
+        <a href="./projects.html" class="block py-2 px-4 hover:bg-gray-100">Projects</a>
+        <a href="./blogs.html" class="block py-2 px-4 hover:bg-gray-100">Blog</a>
+        <a href="./index.html#contact" class="block py-2 px-4 hover:bg-gray-100">Contact</a>
+         <div class="flex justify-center p-4">
+            <a href="https://github.com" target="_blank" class="p-2"><i data-lucide="github"></i></a>
+            <a href="https://linkedin.com" target="_blank" class="p-2"><i data-lucide="linkedin"></i></a>
+        </div>
+    </div>
+</header>

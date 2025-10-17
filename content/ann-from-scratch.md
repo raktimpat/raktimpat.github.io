@@ -7,8 +7,8 @@ author: "Raktim Patar"
 
 
 
-<figure style="margin: auto; text-align: center;">
-  <img src="../static/images/blog/ann_model_from_scratch/nn.png" alt="dataframe preview">
+<figure style="margin: auto; text-align: center; justify-content: center;">
+  <img src="../static/images/blog_images/ann_model_from_scratch/nn.png" alt="dataframe preview">
   <figcaption>Fig. 1: Comparison between a human neuron and a artificial neuron</figcaption>
 </figure>
 
@@ -41,8 +41,8 @@ import seaborn as sns
 df = pd.read_csv("spiral.csv")
 df.head()
 ```
-<figure style="width: 80%; max-width: 500px; margin: auto; text-align: center;">
-  <img src="../static/images/blog/ann_model_from_scratch/dataframe_head.png" alt="preview dataframe">
+<figure style="width: 80%; max-width: 500px; margin: auto; text-align: center; justify-content: center;">
+  <img src="../static/images/blog_images/ann_model_from_scratch/dataframe_head.png" alt="preview dataframe">
   <figcaption>Fig. 2: Dataframe preview</figcaption>
 </figure>
 
@@ -50,8 +50,8 @@ df.head()
 # Visualize the spiral data
 sns.scatterplot(data=df, x="x1", y="x2", hue="y", s=40, palette="bright")
 ```
-<figure style="width: 80%; max-width: 500px; margin: auto; text-align: center;">
-  <img src="../static/images/blog/ann_model_from_scratch/spiral.png" alt="scatter plot spiral">
+<figure style="width: 80%; max-width: 500px; margin: auto; text-align: center; justify-content: center;">
+  <img src="../static/images/blog_images/ann_model_from_scratch/spiral.png" alt="scatter plot spiral">
   <figcaption>Fig. 3: Spiral</figcaption>
 </figure>
 
@@ -339,8 +339,8 @@ plt.ylabel("Cross Entropy Loss")
 plt.title("Cross Entropy Loss vs Epochs")
 plt.show()
 ```
-<figure style="margin: auto; text-align: center;">
-  <img src="../static/images/blog/ann_model_from_scratch/cce_losses.png" alt="dataframe preview">
+<figure style="margin: auto; text-align: center; justify-content: center;">
+  <img src="../static/images/blog_images/ann_model_from_scratch/cce_losses.png" alt="dataframe preview">
   <figcaption>Fig. 4: The Loss Curve </figcaption>
 </figure>
 
@@ -368,8 +368,8 @@ sns.scatterplot(x=X[:, 0], y=X[:, 1], hue=y, s=40, palette="dark")
 plt.show()
 ```
 
-<figure style="margin: auto; text-align: center;">
-  <img src="../static/images/blog/ann_model_from_scratch/decision_boundary.png" alt="dataframe preview">
+<figure style="margin: auto; text-align: center; justify-content: center;">
+  <img src="../static/images/blog_images/ann_model_from_scratch/decision_boundary.png" alt="dataframe preview">
   <figcaption>Fig. 5: Decision boundary over our spiral dataset</figcaption>
 </figure>
 

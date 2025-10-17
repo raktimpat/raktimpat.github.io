@@ -168,8 +168,8 @@ X_bmi = diabetes_data.data[:, np.newaxis, 2]
 X = pd.DataFrame(X_bmi, columns=['BMI'])
 y = pd.Series(diabetes_data.target, name='progression')
 ```
-<figure style="width: 80%; max-width: 500px; margin: auto; text-align: center;">
-  <img src="../static/images/blog/linear_model_from_scratch/dataframe_head.png" alt="dataframe preview">
+<figure style="width: 80%; max-width: 500px; margin: auto; text-align: center; justify-content: center;">
+  <img src="../static/images/blog_images/linear_model_from_scratch/dataframe_head.png" alt="dataframe preview">
   <figcaption>Fig. 1: Dataframe preview</figcaption>
 </figure>
 
@@ -185,8 +185,8 @@ plt.title('BMI vs Disease Progression')
 plt.show()
 ```
 
-<figure style="width: 80%; max-width: 500px; margin: auto; text-align: center;">
-  <img src="../static/images/blog/linear_model_from_scratch/bmi_progression_scatter_plot.png" alt="scatter plot x and y">
+<figure style="width: 80%; max-width: 500px; margin: auto; text-align: center; justify-content: center;">
+  <img src="../static/images/blog_images/linear_model_from_scratch/bmi_progression_scatter_plot.png" alt="scatter plot x and y">
   <figcaption>Fig. 2: BMI vs Disease Progression plot</figcaption>
 </figure>
 
@@ -331,8 +331,8 @@ plt.grid(True)
 plt.show()
 ```
 
-<figure style="margin: auto; text-align: center;">
-  <img src="../static/images/blog/linear_model_from_scratch/bmi_progression_regression_lines.png" alt="scatter plot x and y" class="img-large" style="max-width:100%;">
+<figure style="margin: auto; text-align: center; justify-content: center;">
+  <img src="../static/images/blog_images/linear_model_from_scratch/bmi_progression_regression_lines.png" alt="scatter plot x and y" class="img-large" style="max-width:100%;">
   <figcaption>Fig. 3: Plot showing regression lines at different epochs</figcaption>
 </figure>
 

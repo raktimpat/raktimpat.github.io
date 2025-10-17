@@ -1,57 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>How to Build a Linear Regression Model from Scratch in Python</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="../static/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="/static/css/style.css">
     <script>
         MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']]
-            },
-            svg: {
-                fontCache: 'global'
-            }
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          }
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            transition: all 0.3s ease-in-out;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+        /* Styles for generated markdown content */
+        .prose h1, .prose h2, .prose h3 { font-weight: 800; }
+        .prose p { margin-bottom: 1.25em; }
+        .prose a { color: #1a56db; text-decoration: underline; }
+        .prose pre { background-color: #1f2937; color: #f3f4f6; padding: 1em; border-radius: 0.5em; overflow-x: auto; }
+        .prose code { font-family: 'Courier New', Courier, monospace; }
+        .prose blockquote { border-left: 0.25em solid #d1d5db; padding-left: 1em; font-style: italic; }
+    </style>
 </head>
-<body>
-    <header class="navbar-container">
-    <nav class="navbar">
-        <a href="/" class="nav-logo">
-            <img src="/static/images/rp_logo.png" alt="RP Logo">
-        </a>
-        <ul class="nav-menu">
-            <li><a href="/#about">About Me</a></li>
-            <li><a href="/projects.html">Projects</a></li>
-            <li><a href="/blog.html">Blog</a></li>
-        </ul>
+<body class="text-gray-800">
 
-        <div class="nav-right">
-            <a href="https://github.com/raktimpat" target="_blank" class="nav-icon" aria-label="GitHub Profile">
-                <i class="fab fa-github"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/raktim-patar73/" target="_blank" class="nav-icon" aria-label="LinkedIn Profile">
-                <i class="fab fa-linkedin"></i>
-            </a>
-            <a href="/#contact" class="btn btn-contact">Contact</a>
+    <!-- Header & Navbar -->
+    <header id="navbar" class="navbar sticky top-0 left-0 right-0 z-50 p-4">
+        <div class="container mx-auto flex justify-between items-center max-w-6xl">
+            <a href="../index.html"><img src="../static/images/logo.png" alt="R. Patar Logo" class="my-logo"></a>
+            <nav class="hidden md:flex items-center space-x-6 bg-black text-white px-6 py-2 rounded-full">
+                <a href="../about.html" class="hover:text-gray-300">About Me</a>
+                <a href="../projects.html" class="hover:text-gray-300">Projects</a>
+                <a href="../blogs.html" class="hover:text-gray-300">Blog</a>
+                <a href="https://github.com/raktimpat" target="_blank" class="hover:text-gray-300"><i data-lucide="github"></i></a>
+                <a href="https://www.linkedin.com/in/raktim-patar73/" target="_blank" class="hover:text-gray-300"><i data-lucide="linkedin"></i></a>
+                <a href="../index.html#contact" class="bg-white text-black px-4 py-2 rounded-full font-semibold hover:bg-gray-200">Contact</a>
+            </nav>
+             <button id="mobile-menu-button" class="md:hidden">
+                <i data-lucide="menu"></i>
+            </button>
         </div>
-    </nav>
-</header>
-    <div class="container">
-        <a href="/" class="back-link">&larr; Back to Home</a>
-        <article>
-            <header class="post-header">
-            <h1>How to Build a Linear Regression Model from Scratch in Python</h1>
-            <p class="post-meta">By Raktim Patar on June 10, 2025</p>
-        </header>
-        <section class="post-content">
-            <p>Ever wondered what's really going on inside a machine learning model? This post is for you! 🧐 It’s time to ditch the fancy libraries like Scikit-learn and build a simple linear regression model completely from scratch. This guide gets us to roll up our sleeves and dive into the core concepts—like the cost function and the awesome Gradient Descent algorithm—to see how a model <em>actually</em> learns from data. By the end, you'll have a much deeper understanding of the magic behind the curtain and will have coded your very own predictive model. 🚀</p>
+         <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white mt-4 rounded-lg shadow-lg">
+            <a href="../about.html" class="block py-2 px-4 hover:bg-gray-100">About Me</a>
+            <a href="../projects.html" class="block py-2 px-4 hover:bg-gray-100">Projects</a>
+            <a href="../blogs.html" class="block py-2 px-4 hover:bg-gray-100">Blog</a>
+            <a href="../index.html#contact" class="block py-2 px-4 hover:bg-gray-100">Contact</a>
+             <div class="flex justify-center p-4">
+                <a href="https://github.com" target="_blank" class="p-2"><i data-lucide="github"></i></a>
+                <a href="https://linkedin.com" target="_blank" class="p-2"><i data-lucide="linkedin"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-12">
+        <article class="container mx-auto max-w-3xl px-4 bg-white py-10 rounded-lg shadow-lg">
+            <header class="text-center mb-10 border-b pb-8">
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-3">How to Build a Linear Regression Model from Scratch in Python</h1>
+                <p class="text-gray-500">By Raktim Patar &middot; Published on June 10, 2025</p>
+            </header>
+            <div class="prose max-w-none">
+                <p>Ever wondered what's really going on inside a machine learning model? This post is for you! 🧐 It’s time to ditch the fancy libraries like Scikit-learn and build a simple linear regression model completely from scratch. This guide gets us to roll up our sleeves and dive into the core concepts—like the cost function and the awesome Gradient Descent algorithm—to see how a model <em>actually</em> learns from data. By the end, you'll have a much deeper understanding of the magic behind the curtain and will have coded your very own predictive model. 🚀</p>
 <h2>About the Dataset: BMI vs. Disease Progression</h2>
 <p>For this project, we'll be using the classic diabetes dataset from the scikit-learn library. This dataset contains data from 442 diabetes patients, with ten baseline variables like age, sex, body mass index (BMI), and blood pressure. The goal is to predict disease progression one year after the initial measurements.</p>
 <p>For this tutorial, we will focus on the relationship between <strong>BMI</strong> and <strong>disease progression</strong>. It’s a straightforward, two-column problem perfect for understanding the core mechanics of linear regression.</p>
@@ -73,42 +97,42 @@
 <h3>1. The Hypothesis: Just a Fancy Name for a Line</h3>
 <p>Remember this from school?</p>
 <blockquote>
-<div class="arithmatex">\[
+<p>$$
 y = mx + c
-\]</div>
+$$</p>
 </blockquote>
 <p>This is the equation for a straight line. In our case, <code>y</code> is the <strong>Disease Progression</strong>, and <code>x</code> is the <strong>BMI</strong>.</p>
 <blockquote>
-<div class="arithmatex">\[
+<p>$$
 \text{Disease Progression} = (w \cdot \text{BMI}) + c
-\]</div>
+$$</p>
 </blockquote>
-<p>In machine learning, <strong>m</strong> (the slope) is called the <strong>weight</strong> (<span class="arithmatex">\(w\)</span>), and <strong>c</strong> (the y-intercept) is called the <strong>bias</strong>. These two values, <span class="arithmatex">\(w\)</span> and <span class="arithmatex">\(c\)</span>, are the only things we need to define our line. Think of them as tuning knobs. Our mission is to find the <em>perfect</em> values for these knobs so the line fits our data snugly. This equation is our <strong>hypothesis</strong>—it's our best guess about the relationship between BMI and Disease Progression.</p>
+<p>In machine learning, <strong>m</strong> (the slope) is called the <strong>weight</strong> ($w$), and <strong>c</strong> (the y-intercept) is called the <strong>bias</strong>. These two values, $w$ and $c$, are the only things we need to define our line. Think of them as tuning knobs. Our mission is to find the <em>perfect</em> values for these knobs so the line fits our data snugly. This equation is our <strong>hypothesis</strong>—it's our best guess about the relationship between BMI and Disease Progression.</p>
 <h3>2. The Cost Function: Scoring How "Wrong" We Are</h3>
-<p>So, we start by picking random values for <span class="arithmatex">\(w\)</span> and <span class="arithmatex">\(c\)</span>. The line will probably look terrible. How do we measure <em>how</em> terrible it is? We need a score.</p>
+<p>So, we start by picking random values for $w$ and $c$. The line will probably look terrible. How do we measure <em>how</em> terrible it is? We need a score.</p>
 <p>For every single data point, we can measure the vertical distance between that point and our line. This distance is the <strong>error</strong>. To get a total score, we can't just add up the errors (they'd cancel each other out). So, we <strong>square</strong> each error and then calculate the average.</p>
-<p>This score is called the <strong>Mean Squared Error (MSE)</strong>, and it’s our <strong>cost function</strong>. Its job is simple: to tell us, with a single number, how bad our <span class="arithmatex">\(w\)</span> and <span class="arithmatex">\(c\)</span> values are.</p>
+<p>This score is called the <strong>Mean Squared Error (MSE)</strong>, and it’s our <strong>cost function</strong>. Its job is simple: to tell us, with a single number, how bad our $w$ and $c$ values are.</p>
 <p><strong>The goal is to get this MSE score as low as possible.</strong></p>
 <h3>3. The Mechanics of Learning: From Foggy Hillsides to Mathematical Gradients</h3>
-<p>So, our model has a loss function (like MSE) that tells it how wrong it is. But how does it actually <em>learn</em> the best parameters—the weight (<span class="arithmatex">\(w\)</span>) and bias (<span class="arithmatex">\(b\)</span>)—to minimize this error? It uses a brilliant and fundamental algorithm called <strong>Gradient Descent</strong>.</p>
+<p>So, our model has a loss function (like MSE) that tells it how wrong it is. But how does it actually <em>learn</em> the best parameters—the weight ($w$) and bias ($b$)—to minimize this error? It uses a brilliant and fundamental algorithm called <strong>Gradient Descent</strong>.</p>
 <p>Imagine you're standing on a foggy hillside, and your goal is to get to the lowest point in the valley. You can't see the bottom, but you can feel the slope of the ground right where you're standing. The most logical thing to do is to take a step in the steepest <em>downhill</em> direction. You repeat this process: check the slope, take a careful step, check the slope again, and take another step. Eventually, you'll arrive at the bottom of the valley.</p>
 <p>That's exactly what Gradient Descent does!</p>
 <ul>
 <li><strong>The Valley</strong> is our Loss Function (MSE). The lower you are, the smaller the error.</li>
-<li><strong>Your Position</strong> represents the current values of your parameters, <span class="arithmatex">\(w\)</span> and <span class="arithmatex">\(b\)</span>.</li>
+<li><strong>Your Position</strong> represents the current values of your parameters, $w$ and $b$.</li>
 <li><strong>The Direction Downhill</strong> is the <strong>gradient</strong> of the loss function. A bit of calculus tells the algorithm the steepest direction to move in to reduce the error.</li>
-<li><strong>The Size of Your Step</strong> is the <strong>learning rate (<span class="arithmatex">\(\eta\)</span>)</strong>. This is a small number you set. If it's too big, you might step right over the bottom of the valley! If it's too small, it will take forever to get there.</li>
+<li><strong>The Size of Your Step</strong> is the <strong>learning rate ($\eta$)</strong>. This is a small number you set. If it's too big, you might step right over the bottom of the valley! If it's too small, it will take forever to get there.</li>
 </ul>
 <p>This intuitive process has a precise mathematical foundation. Let's break down the core components and the calculus that powers it.</p>
 <h3>The Mathematical Toolkit</h3>
-<p>For our explanation, let's use our simple linear regression model. Its prediction for a single data point (<span class="arithmatex">\(x_i\)</span>) is given by:</p>
-<div class="arithmatex">\[ \hat{y}_i = w x_i + b \]</div>
+<p>For our explanation, let's use our simple linear regression model. Its prediction for a single data point ($x_i$) is given by:</p>
+<p>$$ \hat{y}_i = w x_i + b $$</p>
 <p>To train this model, we need four key components:</p>
 <ol>
-<li><strong>Parameters:</strong> The values the model learns: the <strong>weight (<span class="arithmatex">\(w\)</span>)</strong> and the <strong>bias (<span class="arithmatex">\(b\)</span>)</strong>.</li>
-<li><strong>Loss Function (<span class="arithmatex">\(L\)</span>):</strong> Our measure of total error. We'll continue with <strong>Mean Squared Error (MSE)</strong>.
-    <span class="arithmatex">\(<span class="arithmatex">\(L = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 = \frac{1}{n} \sum_{i=1}^{n} (y_i - (wx_i + b))^2\)</span>\)</span></li>
-<li><strong>Learning Rate (<span class="arithmatex">\(\eta\)</span>):</strong> A small positive number (e.g., 0.01) that controls the size of our "step" during each update.</li>
+<li><strong>Parameters:</strong> The values the model learns: the <strong>weight ($w$)</strong> and the <strong>bias ($b$)</strong>.</li>
+<li><strong>Loss Function ($L$):</strong> Our measure of total error. We'll continue with <strong>Mean Squared Error (MSE)</strong>.
+    $$L = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}<em>i)^2 = \frac{1}{n} \sum</em>{i=1}^{n} (y_i - (wx_i + b))^2$$</li>
+<li><strong>Learning Rate ($\eta$):</strong> A small positive number (e.g., 0.01) that controls the size of our "step" during each update.</li>
 <li><strong>Gradient:</strong> The derivative of the loss function. It tells us the direction of steepest <em>ascent</em> (uphill).</li>
 </ol>
 <h3>The General Update Rule</h3>
@@ -117,22 +141,22 @@ y = mx + c
 <p>New Parameter = Old Parameter - (Learning Rate × Gradient of the Parameter)</p>
 </blockquote>
 <p>Mathematically, this looks like:
-* <strong>Weight Update:</strong> <span class="arithmatex">\(w_{new} = w_{old} - \eta \frac{\partial L}{\partial w}\)</span>
-* <strong>Bias Update:</strong> <span class="arithmatex">\(b_{new} = b_{old} - \eta \frac{\partial L}{\partial b}\)</span></p>
-<p>The magic is in calculating the gradient terms: <span class="arithmatex">\(\frac{\partial L}{\partial w}\)</span> and <span class="arithmatex">\(\frac{\partial L}{\partial b}\)</span>. These are the partial derivatives that tell us the "slope" of the loss function with respect to each parameter.</p>
+* <strong>Weight Update:</strong> $w_{new} = w_{old} - \eta \frac{\partial L}{\partial w}$
+* <strong>Bias Update:</strong> $b_{new} = b_{old} - \eta \frac{\partial L}{\partial b}$</p>
+<p>The magic is in calculating the gradient terms: $\frac{\partial L}{\partial w}$ and $\frac{\partial L}{\partial b}$. These are the partial derivatives that tell us the "slope" of the loss function with respect to each parameter.</p>
 <h3>Calculating the "Steepest Downhill" Direction</h3>
 <p>Let's calculate these gradients for our MSE loss function using the chain rule from calculus.</p>
-<h4>1. Gradient of Loss with respect to Weight (<span class="arithmatex">\(w\)</span>)</h4>
-<p>We need to find how the loss <span class="arithmatex">\(L\)</span> changes as we change the weight <span class="arithmatex">\(w\)</span>.</p>
-<div class="arithmatex">\[ \frac{\partial L}{\partial w} = \frac{\partial}{\partial w} \left[ \frac{1}{n} \sum_{i=1}^{n} (y_i - (wx_i + b))^2 \right] \]</div>
+<h4>1. Gradient of Loss with respect to Weight ($w$)</h4>
+<p>We need to find how the loss $L$ changes as we change the weight $w$.</p>
+<p>$$ \frac{\partial L}{\partial w} = \frac{\partial}{\partial w} \left[ \frac{1}{n} \sum_{i=1}^{n} (y_i - (wx_i + b))^2 \right] $$</p>
 <p>Applying the chain rule:
 $$ \frac{\partial L}{\partial w} = \frac{1}{n} \sum_{i=1}^{n} 2(y_i - (wx_i + b)) \cdot \frac{\partial}{\partial w}(y_i - wx_i - b) $$
 $$ \frac{\partial L}{\partial w} = \frac{1}{n} \sum_{i=1}^{n} 2(y_i - \hat{y}_i) \cdot (-x_i) $$</p>
 <p>This gives us the final gradient for the weight:
 $$ \frac{\partial L}{\partial w} = -\frac{2}{n} \sum_{i=1}^{n} x_i (y_i - \hat{y}_i) $$</p>
-<h4>2. Gradient of Loss with respect to Bias (<span class="arithmatex">\(b\)</span>)</h4>
-<p>Similarly, we find how the loss <span class="arithmatex">\(L\)</span> changes as we change the bias <span class="arithmatex">\(b\)</span>.</p>
-<div class="arithmatex">\[ \frac{\partial L}{\partial b} = \frac{\partial}{\partial b} \left[ \frac{1}{n} \sum_{i=1}^{n} (y_i - (wx_i + b))^2 \right] \]</div>
+<h4>2. Gradient of Loss with respect to Bias ($b$)</h4>
+<p>Similarly, we find how the loss $L$ changes as we change the bias $b$.</p>
+<p>$$ \frac{\partial L}{\partial b} = \frac{\partial}{\partial b} \left[ \frac{1}{n} \sum_{i=1}^{n} (y_i - (wx_i + b))^2 \right] $$</p>
 <p>Applying the chain rule:
 $$ \frac{\partial L}{\partial b} = \frac{1}{n} \sum_{i=1}^{n} 2(y_i - (wx_i + b)) \cdot \frac{\partial}{\partial b}(y_i - wx_i - b) $$
 $$ \frac{\partial L}{\partial b} = \frac{1}{n} \sum_{i=1}^{n} 2(y_i - \hat{y}_i) \cdot (-1) $$</p>
@@ -141,10 +165,10 @@ $$ \frac{\partial L}{\partial b} = -\frac{2}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)
 <h3>The Learning Loop in Action</h3>
 <p>Now we can substitute these specific gradients back into our general update rules:</p>
 <ul>
-<li><strong>Weight Update:</strong> <span class="arithmatex">\(w_{new} = w_{old} - \eta \left( -\frac{2}{n} \sum_{i=1}^{n} x_i (y_i - \hat{y}_i) \right)\)</span></li>
-<li><strong>Bias Update:</strong> <span class="arithmatex">\(b_{new} = b_{old} - \eta \left( -\frac{2}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i) \right)\)</span></li>
+<li><strong>Weight Update:</strong> $w_{new} = w_{old} - \eta \left( -\frac{2}{n} \sum_{i=1}^{n} x_i (y_i - \hat{y}_i) \right)$</li>
+<li><strong>Bias Update:</strong> $b_{new} = b_{old} - \eta \left( -\frac{2}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i) \right)$</li>
 </ul>
-<p>This is the core of how the model learns. In each step, the algorithm calculates the error <span class="arithmatex">\((y_i - \hat{y}_i)\)</span> for all data points, computes the gradients, and nudges the weights and bias in the exact direction that will make the total error smaller. This process is repeated thousands of times until the loss is minimized and the model's predictions are as accurate as possible—finally reaching the bottom of the valley.</p>
+<p>This is the core of how the model learns. In each step, the algorithm calculates the error $(y_i - \hat{y}_i)$ for all data points, computes the gradients, and nudges the weights and bias in the exact direction that will make the total error smaller. This process is repeated thousands of times until the loss is minimized and the model's predictions are as accurate as possible—finally reaching the bottom of the valley.</p>
 <h2>Let's Get Coding!</h2>
 <p>Time to translate the theory into Python.</p>
 <h3>Step 1: Import Libraries and Load Data</h3>
@@ -168,8 +192,8 @@ $$ \frac{\partial L}{\partial b} = -\frac{2}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)
 <span class="n">y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">diabetes_data</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;progression&#39;</span><span class="p">)</span>
 </code></pre></div>
 
-<figure style="width: 80%; max-width: 500px; margin: auto; text-align: center;">
-  <img src="../static/images/blog/linear_model_from_scratch/dataframe_head.png" alt="dataframe preview">
+<figure style="width: 80%; max-width: 500px; margin: auto; text-align: center; justify-content: center;">
+  <img src="../static/images/blog_images/linear_model_from_scratch/dataframe_head.png" alt="dataframe preview">
   <figcaption>Fig. 1: Dataframe preview</figcaption>
 </figure>
 
@@ -182,8 +206,8 @@ $$ \frac{\partial L}{\partial b} = -\frac{2}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 
-<figure style="width: 80%; max-width: 500px; margin: auto; text-align: center;">
-  <img src="../static/images/blog/linear_model_from_scratch/bmi_progression_scatter_plot.png" alt="scatter plot x and y">
+<figure style="width: 80%; max-width: 500px; margin: auto; text-align: center; justify-content: center;">
+  <img src="../static/images/blog_images/linear_model_from_scratch/bmi_progression_scatter_plot.png" alt="scatter plot x and y">
   <figcaption>Fig. 2: BMI vs Disease Progression plot</figcaption>
 </figure>
 
@@ -208,7 +232,7 @@ $$ \frac{\partial L}{\partial b} = -\frac{2}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)
 <p><strong>Explanation:</strong></p>
 <ul>
 <li><code>__init__</code> is called whenever we create a new instance of our model (e.g., <code>model = LinearRegression()</code>).</li>
-<li><code>learning_rate</code> (<span class="arithmatex">\(\eta\)</span>): This is the "step size" for our Gradient Descent algorithm. We give it a default value of <code>0.01</code>.</li>
+<li><code>learning_rate</code> ($\eta$): This is the "step size" for our Gradient Descent algorithm. We give it a default value of <code>0.01</code>.</li>
 <li><code>iterations</code>: This is the number of times we will run our training loop. More iterations mean more steps taken towards the minimum of the cost function.</li>
 <li><code>error_list</code>, <code>weight_list</code>, <code>bias_list</code>: We create these empty lists to track how our model's error, weight, and bias change during training. This is incredibly useful for visualizing the learning process later on.</li>
 <li><code>self.W</code> and <code>self.b</code>: We initialize the weight and bias to <code>None</code>. They have no value yet because the model hasn't been trained. They will get their initial values inside the <code>fit</code> method.</li>
@@ -261,8 +285,8 @@ $$ \frac{\partial L}{\partial b} = -\frac{2}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)
 <ol>
 <li><strong>Get Predictions:</strong> First, we calculate the model's current predictions (<code>Y_pred</code>) with the existing <code>W</code> and <code>b</code>.</li>
 <li><strong>Calculate Gradients:</strong><ul>
-<li><code>dW</code>: This line calculates the gradient of the cost function with respect to the weight <code>W</code>. It's the vectorized version of the formula: <span class="arithmatex">\(\frac{\partial L}{\partial w} = -\frac{2}{n} \sum x_i (y_i - \hat{y}_i)\)</span>. <code>(self.X.T).dot(self.Y - Y_pred)</code> is a fast, <code>numpy</code>-powered way to perform the sum of <code>x * error</code>.</li>
-<li><code>db</code>: This calculates the gradient with respect to the bias <code>b</code>, which is the vectorized version of: <span class="arithmatex">\(\frac{\partial L}{\partial b} = -\frac{2}{n} \sum (y_i - \hat{y}_i)\)</span>.</li>
+<li><code>dW</code>: This line calculates the gradient of the cost function with respect to the weight <code>W</code>. It's the vectorized version of the formula: $\frac{\partial L}{\partial w} = -\frac{2}{n} \sum x_i (y_i - \hat{y}_i)$. <code>(self.X.T).dot(self.Y - Y_pred)</code> is a fast, <code>numpy</code>-powered way to perform the sum of <code>x * error</code>.</li>
+<li><code>db</code>: This calculates the gradient with respect to the bias <code>b</code>, which is the vectorized version of: $\frac{\partial L}{\partial b} = -\frac{2}{n} \sum (y_i - \hat{y}_i)$.</li>
 </ul>
 </li>
 <li><strong>Update Parameters:</strong> We apply the update rule: <code>New Parameter = Old Parameter - (Learning Rate × Gradient)</code>. This nudges <code>self.W</code> and <code>self.b</code> in the direction that minimizes the error, effectively taking one step downhill.</li>
@@ -275,8 +299,8 @@ $$ \frac{\partial L}{\partial b} = -\frac{2}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)
 
 <p><strong>Explanation:</strong></p>
 <ul>
-<li>This is our hypothesis function: <span class="arithmatex">\(\hat{y} = wx + b\)</span>.</li>
-<li><code>X.dot(self.W)</code> is the <code>numpy</code> way of calculating the dot product between the input features <code>X</code> and the learned weights <code>W</code>. This is mathematically equivalent to <span class="arithmatex">\((w \cdot x)\)</span> for all data points at once. We then add the bias <code>b</code>.</li>
+<li>This is our hypothesis function: $\hat{y} = wx + b$.</li>
+<li><code>X.dot(self.W)</code> is the <code>numpy</code> way of calculating the dot product between the input features <code>X</code> and the learned weights <code>W</code>. This is mathematically equivalent to $(w \cdot x)$ for all data points at once. We then add the bias <code>b</code>.</li>
 </ul>
 <h2>Putting It All Together: Training, Visualization, and Final Thoughts</h2>
 <p>We have built the theory and the code; now let's see our model in action. The final step is to train our <code>LinearRegression</code> class on the diabetes dataset and visualize the results to truly understand the learning process.</p>
@@ -309,8 +333,8 @@ $$ \frac{\partial L}{\partial b} = -\frac{2}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 
-<figure style="margin: auto; text-align: center;">
-  <img src="../static/images/blog/linear_model_from_scratch/bmi_progression_regression_lines.png" alt="scatter plot x and y" class="img-large" style="max-width:100%;">
+<figure style="margin: auto; text-align: center; justify-content: center;">
+  <img src="../static/images/blog_images/linear_model_from_scratch/bmi_progression_regression_lines.png" alt="scatter plot x and y" class="img-large" style="max-width:100%;">
   <figcaption>Fig. 3: Plot showing regression lines at different epochs</figcaption>
 </figure>
 
@@ -334,7 +358,7 @@ $$ \frac{\partial L}{\partial b} = -\frac{2}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)
 <h1>Key Takeaways</h1>
 <ul>
 <li>
-<p><strong>Linear Regression</strong> finds the best-fitting straight line (<span class="arithmatex">\(y = wx + b\)</span>) to describe the relationship between variables.</p>
+<p><strong>Linear Regression</strong> finds the best-fitting straight line ($y = wx + b$) to describe the relationship between variables.</p>
 </li>
 <li>
 <p>The "best fit" is found by minimizing a <strong>Cost Function</strong>, like Mean Squared Error (MSE), which measures the model's total error.</p>
@@ -353,22 +377,32 @@ $$ \frac{\partial L}{\partial b} = -\frac{2}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)
 <p>And there you have it! You've officially built a linear regression model from scratch. Give yourself a pat on the back—you've turned complex math into simple, working code. The next time you use a library and type <code>.fit()</code>, you'll know the magic happening under the hood.</p>
 <p>This is a huge step in your machine learning journey. The best way to learn is by doing, so keep experimenting with this code, try it on new data, and see what you can build next.</p>
 <p>Keep up the great work, and happy coding! 🚀✨</p>
-        </section>
+            </div>
         </article>
-    </div>
-    <div class="container">
-    <hr class="footer-divider">
-</div>
+    </main>
 
-<footer class="site-footer">
-    <div class="container">
-        <p>&copy; 2025 by Raktim Patar. All rights reserved.</p>
-        <div class="footer-links">
-            <a href="https://github.com/raktimpat" target="_blank">GitHub</a> &bull;
-            <a href="https://www.linkedin.com/in/raktim-patar73/" target="_blank">LinkedIn</a>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 mt-12">
+        <div class="container mx-auto max-w-5xl px-4 text-center">
+            <p>&copy; 2025 by Raktim Patar. All rights reserved.</p>
+            <div class="flex justify-center space-x-4 mt-4">
+                <a href="https://github.com" target="_blank" class="hover:text-gray-400">GitHub</a>
+                <span>&middot;</span>
+                <a href="https://linkedin.com" target="_blank" class="hover:text-gray-400">LinkedIn</a>
+            </div>
         </div>
-    </div>
-</footer>
-    <script src="/static/js/main.js"></script>
+    </footer>
+     <script src="./static/js/main.js"></script>
+    <script>
+        lucide.createIcons();
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+
 </body>
 </html>
